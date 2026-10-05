@@ -10,7 +10,7 @@
 
 This project is an early-stage redesign and digital tooling effort for the **Poway Veterans Organization (PVO)**. The goal is to modernize the organization's web presence and build AI-assisted tools that help veterans navigate eligibility, connect with volunteers, and get quick answers to common questions.
 
-The three components built so far can be found on this website: https://pvo.opencodingsociety.com/
+The three components built so far can be found on the following website: https://pvo.opencodingsociety.com/
 
 ---
 
