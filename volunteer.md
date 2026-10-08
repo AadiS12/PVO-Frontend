@@ -717,12 +717,15 @@ api_base: http://localhost:4500
     }
 
     try {
-const res = await fetch('https://pirates.opencodingsociety.com/api/volunteers', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  credentials: 'include',
-  body: JSON.stringify(payload)   
-});
+      const apiBase = ['localhost', '127.0.0.1'].includes(location.hostname)
+        ? 'http://localhost:8426'
+        : 'https://pirates.opencodingsociety.com';
+      const res = await fetch(`${apiBase}/api/volunteers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(payload)
+      });
       const data = await res.json();
       if (res.ok) {
         alert("Application submitted! We'll be in touch within 3 business days.");

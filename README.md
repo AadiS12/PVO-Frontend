@@ -29,7 +29,7 @@ An AI-powered chat interface built with the **Groq API**. Designed to give veter
 ### 2. `prescreener.md` — Eligibility Prescreener
 A prescreener flow to help veterans (or their families) quickly determine whether they may qualify for PVO services or programs before submitting a full application.
 
-- **Status:** 🚧 In Progress
+- **Status:** 🚧 In Progress — connected to the Flask prediction API and SQLite submission store
 - **Purpose:** Reduce friction for new applicants and filter inquiries before they reach staff
 - **Current focus:** Integrating the **Gemini API** to extract data from uploaded veteran IDs, improving accuracy of eligibility determination
 - **Format:** Markdown file
@@ -57,18 +57,40 @@ A form spec for prospective volunteers to express interest, share availability, 
 
 ---
 
+## Local Teacher Demo
+
+The eligibility flow is served by Jekyll and calls the Flask `/api/veteran/predict` endpoint. The API validates the answers, predicts a routing estimate, and saves a submission to SQLite. The result is only a prescreening aid; PVO must confirm eligibility.
+
+1. In `PVO-Backend`, create/activate a Python virtual environment and install `requirements.txt` if needed.
+2. Start the Flask backend:
+   ```bash
+   cd PVO-Backend
+   python main.py
+   ```
+   The API listens at `http://localhost:8426`; startup creates the prescreener tables in `instance/pvo.db`.
+3. In a second terminal, start the frontend:
+   ```bash
+   cd PVO-Frontend
+   bundle install
+   bundle exec jekyll serve --host 127.0.0.1 --port 4000
+   ```
+4. Open `http://127.0.0.1:4000/prescreener`. Complete the questions and confirm the result says it was saved as a live submission.
+5. Check `http://localhost:8426/api/veteran/submissions?limit=1` to verify the saved response.
+
+When deployed, the prescreener calls `https://flask.opencodingsociety.com`. If the live service is unavailable, the page labels the browser-only estimate and asks users to confirm with PVO.
+
+### Capstone Requirements
+
+The capstone goal—helping veterans and their families navigate PVO services—drives these requirements:
+
+- Keep the eligibility flow short, mobile-friendly, and understandable without technical knowledge.
+- Accept only the supported service-area, need, and household answers; explain next steps rather than promise eligibility.
+- Send the completed answers to the Flask API, show a clear service/error state, and persist successful submissions for PVO follow-up.
+- Minimize collection of sensitive information in the prescreener and have PVO staff validate the routing recommendations before relying on them.
+
 ## How to Run
 
-1. Clone or download this repository
-2. Create and activate a virtual environment:
-```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-3. Install Python dependencies: `pip install -r requirements.txt`
-4. Start the Flask server in backend: `python app.py`
-5. Open the app in a browser at `http://localhost:4500`
-6. For the chatbot — add your Groq API key where indicated (environment variable or config file)
+Follow the **Local Teacher Demo** steps above to run the Jekyll frontend and Flask backend together. The chatbot also requires its configured Groq API key.
 ---
 
 ## What's Been Done
@@ -77,9 +99,10 @@ A form spec for prospective volunteers to express interest, share availability, 
 - [x] AI chatbot — mostly complete
 - [x] Flask backend set up
 - [x] SQLite database set up
-- [ ] Eligibility prescreener — Gemini API ID extraction in progress
+- [x] Eligibility prescreener — connected to Flask prediction and SQLite persistence
+- [ ] Gemini API ID extraction and full end-to-end application submission
 - [ ] UI polish and mobile responsiveness
-- [ ] Connect forms to Flask routes and SQLite
+- [ ] Connect and validate all remaining forms against Flask routes and SQLite
 - [ ] User testing with veterans
 
 ---

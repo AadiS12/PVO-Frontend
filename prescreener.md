@@ -382,6 +382,10 @@ nav a:hover{color:#fff;background:rgba(255,255,255,0.08);border-color:rgba(255,2
 </div>
 
 <script>
+const VETERAN_API_BASE = ['localhost', '127.0.0.1'].includes(location.hostname)
+  ? 'http://localhost:8426'
+  : 'https://flask.opencodingsociety.com';
+
 // ── Zip code data ─────────────────────────────────────────────────────────────
 const SERVED_ZIPS = {
   // Poway
@@ -449,6 +453,7 @@ const answers = {};
 let savedSeconds = 0;
 let zipLocation = null;
 let smartDraft = null;
+let livePrediction = null;
 
 // ── Chip labels ───────────────────────────────────────────────────────────────
 const CHIP_LABELS = {
@@ -980,12 +985,13 @@ function advance(){
   },280);
 }
 
-function showResult(){
+function showResult(liveResult = null){
   setApplicationHeader('Complete!','Your prescreener is complete. Review the best next step below.','Routing summary ready.');
 
-  const res = simulate(answers);
+  const res = liveResult || simulate(answers);
+  livePrediction = liveResult;
   const isPVO = res.pvo_direct >= 0.5;
-  if(isPVO) confetti();
+  if(isPVO && !liveResult) confetti();
 
   const pvoPct = Math.round(res.pvo_direct*100);
   const refPct = Math.round(res.refer_out*100);
@@ -1003,11 +1009,12 @@ function showResult(){
   stage.innerHTML=`<div class="result-screen">
     <div class="result-header">
       <div class="result-seal ${isPVO?'yes':'ref'}">${isPVO?'✓':'→'}</div>
-      <div class="result-title ${isPVO?'yes':'ref'}">${isPVO?'PVO Can Help You Directly':'We\'ll Connect You to the Right Support'}</div>
-      <p class="result-desc">${isPVO?'Based on your answers, PVO has directly assisted veterans in similar situations. Here\'s what to do next.':'Your need may be best served through a specialized partner — but PVO will personally make that connection for you.'}</p>
+      <div class="result-title ${isPVO?'yes':'ref'}">${liveResult ? (isPVO?'PVO Can Help You Directly':'We\'ll Connect You to the Right Support') : (isPVO?'Demo estimate: PVO may help directly':'Demo estimate: partner support may fit best')}</div>
+      <p class="result-desc">${liveResult ? (isPVO?'Based on your answers, PVO has directly assisted veterans in similar situations. Here\'s what to do next.':'Your need may be best served through a specialized partner — but PVO will personally make that connection for you.') : 'This example estimate runs in your browser until the live PVO service responds. Confirm eligibility directly with PVO.'}</p>
       <div class="confidence-badge ${res.confidence}">${confLabel[res.confidence]}</div>
     </div>
     <div class="prob-section">
+      <p id="live-api-status" role="status" aria-live="polite">${liveResult ? `Live model result saved as submission #${liveResult.submission_id}.` : 'Connecting to the live PVO eligibility service…'}</p>
       <div class="prob-row">
         <div class="prob-top"><span class="prob-name">PVO handles directly</span><span class="prob-pct g" id="p1">0%</span></div>
         <div class="prob-track"><div class="prob-fill g" id="pb1"></div></div>
@@ -1025,24 +1032,32 @@ function showResult(){
     <button class="restart-link" onclick="restartFlow()">Start over with different answers</button>
   </div>`;
 
-  setTimeout(()=>{
-    document.getElementById('pb1').style.width=pvoPct+'%';
-    document.getElementById('p1').textContent=pvoPct+'%';
-    document.getElementById('pb2').style.width=refPct+'%';
-    document.getElementById('p2').textContent=refPct+'%';
-  },250);
+  document.getElementById('pb1').style.width=pvoPct+'%';
+  document.getElementById('p1').textContent=pvoPct+'%';
+  document.getElementById('pb2').style.width=refPct+'%';
+  document.getElementById('p2').textContent=refPct+'%';
 
-  // Try the real API
-  fetch('http://localhost:8587/api/veteran/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(answers)})
-    .then(r=>r.json()).then(r=>{
-      const p=Math.round(r.pvo_direct*100),rv=Math.round(r.refer_out*100);
-      document.getElementById('pb1').style.width=p+'%';document.getElementById('p1').textContent=p+'%';
-      document.getElementById('pb2').style.width=rv+'%';document.getElementById('p2').textContent=rv+'%';
-    }).catch(()=>{});
+  if(!liveResult){
+    fetch(`${VETERAN_API_BASE}/api/veteran/predict`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(answers)
+    }).then(async response=>{
+      const result = await response.json();
+      if(!response.ok) throw new Error(result.detail || result.error || `Request failed (${response.status})`);
+      if(!Number.isFinite(result.pvo_direct) || !Number.isFinite(result.refer_out) || !Number.isInteger(result.submission_id)){
+        throw new Error('The API returned an unexpected prediction response.');
+      }
+      showResult(result);
+    }).catch(error=>{
+      const status = document.getElementById('live-api-status');
+      if(status) status.textContent = `Live prediction unavailable: ${error.message}. The displayed demo estimate is not an eligibility decision; please confirm with PVO.`;
+    });
+  }
 }
 
 function startSmartApplication(){
-  const res = simulate(answers);
+  const res = livePrediction || simulate(answers);
   const payload = {
     ...answers,
     pvo_direct: res.pvo_direct,
