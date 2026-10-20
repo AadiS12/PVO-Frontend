@@ -152,6 +152,11 @@ permalink: /
     background: rgba(255,255,255,0.08);
     border-color: rgba(255,255,255,0.1);
   }
+  nav a.account-link {
+    background: transparent;
+    border-color: rgba(255,255,255,0.35);
+  }
+  nav a.account-link:hover { background: rgba(255,255,255,0.08); }
   .nav-cta {
     background: var(--red) !important;
     color: #fff !important;
@@ -1119,6 +1124,7 @@ permalink: /
       <a href="#tools">Platform Tools</a>
       <a href="#about">About</a>
       <a href="https://pvo.opencodingsociety.com/volunteer" target="_blank" rel="noopener">Volunteer</a>
+      <a id="account-link" class="account-link" href="{{site.baseurl}}/member-login">Member Login</a>
       <a href="https://pvo.opencodingsociety.com/prescreener" target="_blank" rel="noopener" class="nav-cta">Check Eligibility</a>
     </nav>
   </div>
@@ -1273,6 +1279,34 @@ permalink: /
 
 <script type="module">
   import { pythonURI } from '/assets/js/api/config.js';
+
+  const accountLink = document.getElementById('account-link');
+  async function updateAccountLink() {
+    try {
+      const accountResponse = await fetch(`${pythonURI}/api/id`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+        headers: { Accept: 'application/json' }
+      });
+
+      if (accountResponse.ok) {
+        const account = await accountResponse.json();
+        const accountName = account.name || account.uid;
+        if (!accountName) {
+          throw new Error('The account response did not include a name or user ID.');
+        }
+        accountLink.textContent = `Welcome, ${accountName}`;
+        accountLink.href = '{{site.baseurl}}/profile';
+      } else if (accountResponse.status !== 401) {
+        throw new Error(`Account status request failed (${accountResponse.status}).`);
+      }
+    } catch (error) {
+      accountLink.textContent = 'Login status unavailable';
+      console.error('Could not check PVO login status:', error);
+    }
+  }
+  updateAccountLink();
 
   const widget = document.getElementById('pvoChatbotWidget');
   const fab = document.getElementById('pvoChatbotFab');

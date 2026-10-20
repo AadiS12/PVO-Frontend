@@ -68,7 +68,8 @@ search_exclude: true
       <p>
         <button type="submit" class="medium filledHighlight primary">Sign Up</button>
       </p>
-      <p id="signupMessage" style="color: green;"></p>
+      <p id="signupJavaMessage" style="color: green;"></p>
+      <p id="signupPythonMessage" style="color: green;"></p>
     </form>
   </div>
 </div>
@@ -111,7 +112,7 @@ search_exclude: true
         dob: "11-01-2024",  // Static date for now, you can modify this
         name: document.getElementById("name").value,
         password: document.getElementById("signupPassword").value,
-        kasmServerNeeded: document.getElementById("kasmNeeded").checked,
+        kasm_server_needed: document.getElementById("kasmNeeded").checked,
       })
     };
 
@@ -123,28 +124,29 @@ search_exclude: true
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          document.getElementById("signupMessage").innerText = "Sign up successful!";
+          document.getElementById("signupJavaMessage").innerText = "Java backend: sign up successful.";
         } else {
-          document.getElementById("signupMessage").innerText = "Sign up failed: " + data.message;
+          document.getElementById("signupJavaMessage").innerText = "Java backend: sign up failed: " + data.message;
         }
       })
       .catch(error => {
-        document.getElementById("signupMessage").innerText = "Error: " + error.message;
+        document.getElementById("signupJavaMessage").innerText = "Java backend error: " + error.message;
         console.error('Error during signup:', error);
       });
 
     fetch(signupOptionsPython.URL, signupOptionsPython)
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          document.getElementById("signupMessage").innerText = "Sign up successful!";
-        } else {
-          document.getElementById("signupMessage").innerText = "Sign up failed: " + data.message;
+      .then(async response => {
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message || `HTTP ${response.status}`);
         }
+        document.getElementById("signupPythonMessage").innerText =
+          `PVO backend: account ${data.uid} created successfully.`;
       })
       .catch(error => {
-        document.getElementById("signupMessage").innerText = "Error: " + error.message;
-        console.error('Error during signup:', error);
+        document.getElementById("signupPythonMessage").innerText =
+          "PVO backend signup failed: " + error.message;
+        console.error('PVO backend signup error:', error);
       });
   };
 </script>

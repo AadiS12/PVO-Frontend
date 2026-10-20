@@ -124,7 +124,7 @@ Before any wider rollout, the tools — especially the chatbot and prescreener �
 
 - The backend is **Flask (Python)** — keep dependencies minimal and documented in a `requirements.txt` so the next person can get up and running with `pip install -r requirements.txt`.
 - The chatbot uses **Groq** (not OpenAI or Anthropic) — the API interface is similar but the base URL and model names differ. Check [Groq's docs](https://console.groq.com/docs) if you need to swap models. The Groq API key should be stored as an environment variable, never hardcoded.
-- There is no login or authentication yet. The SQLite database is in place but keep privacy and access control in mind as more veteran data (especially health/benefits-related) gets stored.
+- The [member login page](./navigation/member-login.md) creates username-based accounts through `/api/user/guest` and authenticates against the Flask backend's `/api/authenticate` endpoint. The backend sets the login cookie; the PVO homepage checks `/api/id` to show the signed-in user's name. Authentication and authorization for any veteran data must still be enforced by the backend.
 - This is a volunteer/community project — keep solutions simple and maintainable by non-engineers where possible.
 
 ---
