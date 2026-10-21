@@ -128,11 +128,11 @@ show_reading_time: false
     <p id="member-signup-message" class="member-login-message" role="status" aria-live="polite"></p>
   </section>
 
-  <a class="member-login-home" href="{{site.baseurl}}/">Return to the PVO homepage</a>
+  <a class="member-login-home" href="../">Return to the PVO homepage</a>
 </main>
 
 <script type="module">
-  import { pythonURI } from '{{site.baseurl}}/assets/js/api/config.js';
+  import { pythonURI } from '../assets/js/api/config.js';
 
   const form = document.getElementById('member-login-form');
   const submitButton = document.getElementById('member-login-submit');

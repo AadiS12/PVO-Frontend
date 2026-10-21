@@ -1124,7 +1124,7 @@ permalink: /
       <a href="#tools">Platform Tools</a>
       <a href="#about">About</a>
       <a href="https://pvo.opencodingsociety.com/volunteer" target="_blank" rel="noopener">Volunteer</a>
-      <a id="account-link" class="account-link" href="{{site.baseurl}}/member-login/">Member Login</a>
+      <a id="account-link" class="account-link" href="member-login/">Member Login</a>
       <a href="https://pvo.opencodingsociety.com/prescreener" target="_blank" rel="noopener" class="nav-cta">Check Eligibility</a>
     </nav>
   </div>
@@ -1297,7 +1297,7 @@ permalink: /
           throw new Error('The account response did not include a name or user ID.');
         }
         accountLink.textContent = `Welcome, ${accountName}`;
-        accountLink.href = '{{site.baseurl}}/profile';
+        accountLink.href = 'profile/';
       } else if (accountResponse.status !== 401) {
         throw new Error(`Account status request failed (${accountResponse.status}).`);
       }
