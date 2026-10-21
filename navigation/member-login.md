@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Member Login
-permalink: /member-login
+permalink: /member-login/
 search_exclude: true
 show_reading_time: false
 ---
