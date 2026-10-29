@@ -1,18 +1,7 @@
 ---
-layout: base
-title: Poway Veterans Organization
-permalink: /
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PVO | Open Coding Society</title>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
-<style>
-  :root {
+:root {
     --navy:       #1a2744;
     --navy-dark:  #111c33;
     --navy-light: #243460;
@@ -135,6 +124,25 @@ permalink: /
     gap: 0.45rem;
     margin-left: auto;
   }
+  .menu-toggle {
+    display: none;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 999px;
+    background: transparent;
+    color: #fff;
+    padding: 0.45rem 0.8rem;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .menu-toggle:hover,
+  .menu-toggle:focus-visible {
+    background: rgba(255,255,255,0.08);
+    outline: none;
+  }
   nav a {
     color: rgba(255,255,255,0.82);
     text-decoration: none;
@@ -157,6 +165,23 @@ permalink: /
     border-color: rgba(255,255,255,0.35);
   }
   nav a.account-link:hover { background: rgba(255,255,255,0.08); }
+  nav .logout-button {
+    color: rgba(255,255,255,0.82);
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 999px;
+    padding: 0.45rem 0.75rem;
+    font: inherit;
+    font-size: 0.83rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  nav .logout-button:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  nav .logout-button:disabled { cursor: wait; opacity: 0.65; }
+  nav .logout-button[hidden] { display: none; }
+  nav .account-link[hidden] { display: none; }
   .nav-cta {
     background: var(--red) !important;
     color: #fff !important;
@@ -166,6 +191,55 @@ permalink: /
     transition: background 0.18s !important;
   }
   .nav-cta:hover { background: var(--red-dark) !important; }
+
+  .member-dashboard {
+    display: none;
+    background: linear-gradient(135deg, #182944 0%, #243460 100%);
+    border-bottom: 1px solid rgba(201,168,76,0.45);
+    padding: 1.15rem 2rem;
+  }
+  .member-dashboard.is-visible { display: block; }
+  .member-dashboard-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+  }
+  .member-dashboard-copy strong {
+    display: block;
+    color: #fff;
+    font-family: 'Merriweather', serif;
+    font-size: 1.05rem;
+  }
+  .member-dashboard-copy span {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.86rem;
+    margin-top: 0.15rem;
+  }
+  .member-dashboard-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  .member-dashboard-links a {
+    border: 1px solid rgba(232,201,122,0.55);
+    border-radius: 999px;
+    color: var(--gold-light);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.45rem 0.8rem;
+    text-decoration: none;
+    transition: background 0.18s, color 0.18s;
+  }
+  .member-dashboard-links a:hover,
+  .member-dashboard-links a:focus-visible {
+    background: var(--gold-light);
+    color: var(--navy-dark);
+    outline: none;
+  }
 
   /* ── HERO ── */
   .hero {
@@ -1059,6 +1133,18 @@ permalink: /
     .header-inner {
       padding: 0.9rem 1rem 1rem;
     }
+    .menu-toggle { display: inline-flex; }
+    nav {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.35rem;
+    }
+    nav.is-open { display: flex; }
+    .member-dashboard { padding: 1rem; }
+    .member-dashboard-inner { align-items: stretch; flex-direction: column; }
+    .member-dashboard-links a { flex: 1; text-align: center; }
     .logo-wrap {
       flex-direction: column;
       text-align: center;
@@ -1100,358 +1186,3 @@ permalink: /
       width: 100%;
     }
   }
-</style>
-</head>
-<body>
-<div class="pvo-site">
-
-<!-- ANNOUNCEMENT BAR -->
-<div class="announcement-bar">
-  ★ &nbsp;PVO Student Platform &nbsp;·&nbsp;
-  <a href="https://pvo.opencodingsociety.com/volunteer" target="_blank" rel="noopener">Volunteer Opportunities Available</a>
-</div>
-
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <a class="logo-wrap" href="https://pvo.opencodingsociety.com/">
-      <div class="logo-emblem">PVO</div>
-      <div>
-        <div class="logo-text-main">Poway Veterans Organization</div>
-      </div>
-    </a>
-    <nav>
-      <a href="#tools">Platform Tools</a>
-      <a href="#about">About</a>
-      <a href="https://pvo.opencodingsociety.com/volunteer" target="_blank" rel="noopener">Volunteer</a>
-      <a id="account-link" class="account-link" href="member-login/">Member Login</a>
-      <a href="https://pvo.opencodingsociety.com/prescreener" target="_blank" rel="noopener" class="nav-cta">Check Eligibility</a>
-    </nav>
-  </div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-stars"></div>
-  <div class="hero-tag">Serving Poway · Ramona · Surrounding Communities</div>
-  <h1>Assisting <span>Poway's Veterans</span><br>with Technology &amp; Community</h1>
-  <p class="hero-mission">Our mission is to provide assistance to veterans or their dependents residing in Poway, Ramona and the surrounding areas — now powered by student-built AI tools and volunteer coordination.</p>
-  <div class="hero-actions">
-    <a href="https://pvo.opencodingsociety.com/prescreener" class="btn-primary" target="_blank" rel="noopener">Apply for Assistance</a>
-    <a href="#tools" class="btn-outline">Explore the Platform</a>
-  </div>
-</section>
-
-<!-- MISSION STRIP -->
-<div class="mission-strip">
-  <p><strong>Student-built technology serving real veterans.</strong> Every tool on this platform was conceived, designed, and shipped by students at Open Coding Society — connecting veterans with resources, faster.</p>
-</div>
-
-<!-- PLATFORM TOOLS -->
-<div class="section" id="tools">
-  <div class="section-inner">
-    <p class="section-eyebrow">Platform Tools</p>
-    <h2 class="section-title">Three tools built for real impact</h2>
-    <p class="section-desc">Explore these tools to better use our website</p>
-
-    <div class="tool-grid">
-
-      <!-- 01 Chatbot -->
-      <a href="https://pvo.opencodingsociety.com/pvo-chatbot/" class="tool-card" data-chatbot-open>
-        <div class="card-header">
-          <span class="card-num">01 · AI Assistant</span>
-          <div class="card-icon">💬</div>
-          <h3 class="card-title-text">PVO Chatbot</h3>
-        </div>
-        <div class="card-body">
-          <span class="card-category-tag">AI Assistant</span>
-          <p class="card-desc-text">An AI assistant built directly into the platform. Ask it anything — about volunteering, navigating the site, or how to get started — and it responds instantly in plain language, no experience required.</p>
-          <p class="card-highlight-box"><strong>Why it matters:</strong> Not everyone knows where to begin. The chatbot removes that friction and makes the platform accessible to any visitor.</p>
-          <span class="card-link">Open Chatbot <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </a>
-
-      <!-- 02 Prescreener -->
-      <a href="https://pvo.opencodingsociety.com/prescreener" class="tool-card" target="_blank" rel="noopener">
-        <div class="card-header">
-          <span class="card-num">02 · Fast Prescreener</span>
-          <div class="card-icon">⭐</div>
-          <h3 class="card-title-text">Veteran Eligibility Prescreener</h3>
-        </div>
-        <div class="card-body">
-          <span class="card-category-tag">Fast Prescreener</span>
-          <p class="card-desc-text">Veterans can instantly find out whether they qualify for PVO support Enter a few details and our trained machine learning model provides an immediate eligibility result.</p>
-          <p class="card-highlight-box"><strong>Why it matters:</strong> Powered by real data, this tool gives veterans a clear, immediate answer — so the right people get connected to resources faster.</p>
-          <span class="card-link">Check Eligibility <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </a>
-
-      <!-- 03 Volunteer Hub -->
-      <a href="https://pvo.opencodingsociety.com/volunteer" class="tool-card" target="_blank" rel="noopener">
-        <div class="card-header">
-          <span class="card-num">03 · Community</span>
-          <div class="card-icon">🤝</div>
-          <h3 class="card-title-text">Volunteer Hub</h3>
-        </div>
-        <div class="card-body">
-          <span class="card-category-tag">Community</span>
-          <p class="card-desc-text">A dedicated space to find, sign up for, and track volunteer opportunities. It connects students who want to give back with the events and causes that need them most.</p>
-          <p class="card-highlight-box"><strong>Why it matters:</strong> Community service is central to what Open Coding Society stands for. This tool turns good intentions into organized, real-world effort.</p>
-          <span class="card-link">Get Involved <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</div>
-
-<hr class="rule-full" />
-
-<!-- ABOUT -->
-<div class="section" id="about">
-  <div class="section-inner">
-    <p class="section-eyebrow">About PVO</p>
-    <h2 class="section-title">Poway Veterans Organization</h2>
-    <div class="about-copy">
-      <p>We are a group of veterans from the Poway area that established our organization in 2014. The mission of the Poway Veterans Organization (PVO) is to provide various types of assistance to veterans and their families residing in Poway, Ramona and surrounding areas. Our objective is to reach out to area veterans who are in need and to do what we can to help meet their needs. Specifically we are providing assistance in areas such as home repairs and upkeep, repairs on personal transportation vehicles and similar activities that are requested by the veterans/families that apply for our assistance.</p>
-      <p>The PVO has no paid staff members, capital assets or buildings/equipment to maintain. We have a small storage shed located at Lake Poway where we keep various PVO materials, such as a pop-up that is used during our fund raising events. The City of Poway provides a secure facility for this storage shed at no cost to PVO.</p>
-      <p>The PVO annual overhead costs for operation include purchasing required liability insurance for our volunteers and board members. We also pay annual fees for our web site and land-line telephone service. State and federal licensing/operation fees are also required annually. Miscellaneous costs (printing, stamps, etc) are kept to a minimum.</p>
-      <p>By keeping PVO operating costs under rigid control, the PVO dedicates more than 95% of our funds to veteran assistance projects and providing financial donations to other veteran service organizations, such as the Disabled American Veterans. At all times we strive to be good stewards of funds donated by the friends of PVO.</p>
-    </div>
-  </div>
-</div>
-
-<!-- DONATE BANNER -->
-<div class="donate-banner">
-  <h2>Help Us Help Our Veterans</h2>
-  <p>Your donations let us help more veterans in the Poway community. Every contribution makes a direct difference in the lives of those who served.</p>
-  <a href="https://powayveterans.org/donate/" class="btn-primary" target="_blank" rel="noopener">Donate to PVO</a>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-brand-name">Poway Veterans Organization</div>
-      <p class="footer-tagline">Assisting veterans or their dependents in Poway, Ramona, and the surrounding areas.</p>
-    </div>
-    <div class="footer-links">
-      <a href="https://pvo.opencodingsociety.com/pvo-chatbot/" data-chatbot-open>PVO Chatbot</a>
-      <a href="https://pvo.opencodingsociety.com/prescreener" target="_blank" rel="noopener">Eligibility Prescreener</a>
-      <a href="https://pvo.opencodingsociety.com/volunteer" target="_blank" rel="noopener">Volunteer Hub</a>
-      <a href="https://powayveterans.org/" target="_blank" rel="noopener">PVO Main Site</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">Open Coding Society &copy; 2025 &nbsp;·&nbsp; Platform built by students</span>
-    <span class="footer-org-tag">PVO &nbsp;·&nbsp; 501(c)3 Organization</span>
-  </div>
-</footer>
-
-<button class="pvo-chatbot-fab" id="pvoChatbotFab" type="button" aria-label="Open PVO assistant" aria-controls="pvoChatbotWidget" aria-expanded="false">🎖️</button>
-
-<aside class="pvo-chatbot-widget" id="pvoChatbotWidget" aria-label="PVO Virtual Assistant" aria-hidden="true" inert>
-  <div class="pvo-chatbot-topbar">
-    <div class="pvo-chatbot-avatar">🎖️</div>
-    <div class="pvo-chatbot-title">
-      <strong>PVO Virtual Assistant</strong>
-      <span>Help and site guide</span>
-    </div>
-    <button class="pvo-chatbot-close" id="pvoChatbotClose" type="button" aria-label="Close PVO assistant">&times;</button>
-  </div>
-  <div class="pvo-prescreener-strip">
-    <div class="pvo-prescreener-copy">
-      <strong>Veteran Eligibility Prescreener</strong>
-      <span>Start with the quick eligibility check.</span>
-    </div>
-    <a class="pvo-prescreener-link" href="https://pvo.opencodingsociety.com/prescreener" target="_blank" rel="noopener">Check Eligibility</a>
-  </div>
-  <div class="pvo-chatbot-messages" id="pvoChatbotMessages" aria-live="polite"></div>
-  <form class="pvo-chatbot-form" id="pvoChatbotForm">
-    <input class="pvo-chatbot-input" id="pvoChatbotInput" type="text" placeholder="Ask about PVO..." autocomplete="off" />
-    <button class="pvo-chatbot-send" id="pvoChatbotSend" type="submit" aria-label="Send message">
-      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
-  </form>
-</aside>
-
-</div>
-
-<script type="module">
-  import { pythonURI } from '/assets/js/api/config.js';
-
-  const accountLink = document.getElementById('account-link');
-  async function updateAccountLink() {
-    try {
-      const accountResponse = await fetch(`${pythonURI}/api/id`, {
-        method: 'GET',
-        mode: 'cors',
-        credentials: 'include',
-        headers: { Accept: 'application/json' }
-      });
-
-      if (accountResponse.ok) {
-        const account = await accountResponse.json();
-        const accountName = account.name || account.uid;
-        if (!accountName) {
-          throw new Error('The account response did not include a name or user ID.');
-        }
-        accountLink.textContent = `Welcome, ${accountName}`;
-        accountLink.href = 'profile/';
-      } else if (accountResponse.status !== 401) {
-        throw new Error(`Account status request failed (${accountResponse.status}).`);
-      }
-    } catch (error) {
-      accountLink.textContent = 'Login status unavailable';
-      console.error('Could not check PVO login status:', error);
-    }
-  }
-  updateAccountLink();
-
-  const widget = document.getElementById('pvoChatbotWidget');
-  const fab = document.getElementById('pvoChatbotFab');
-  const closeButton = document.getElementById('pvoChatbotClose');
-  const messagesEl = document.getElementById('pvoChatbotMessages');
-  const form = document.getElementById('pvoChatbotForm');
-  const input = document.getElementById('pvoChatbotInput');
-  const sendButton = document.getElementById('pvoChatbotSend');
-  const openLinks = document.querySelectorAll('[data-chatbot-open]');
-
-  let chatHistory = [];
-  let chatLoading = false;
-  let welcomeShown = false;
-
-  function setChatOpen(open) {
-    widget.classList.toggle('is-open', open);
-    widget.setAttribute('aria-hidden', String(!open));
-    widget.inert = !open;
-    fab.setAttribute('aria-expanded', String(open));
-    fab.setAttribute('aria-label', open ? 'Close PVO assistant' : 'Open PVO assistant');
-    if (open) {
-      showWelcome();
-      window.setTimeout(() => input.focus(), 120);
-    }
-  }
-
-  function showWelcome() {
-    if (welcomeShown) return;
-    welcomeShown = true;
-    addChatMessage('bot',
-      'Welcome, and thank you for your service!<br><br>I am the <strong>PVO Virtual Assistant</strong>. I can help with assistance requests, volunteering, donations, events, and contact information.',
-      ['Apply for Assistance', 'Scholarships', 'Volunteer / Donate', 'Upcoming Events', 'Contact PVO']
-    );
-  }
-
-  function addChatMessage(role, html, chips = []) {
-    const message = document.createElement('div');
-    message.className = `pvo-chatbot-message ${role}`;
-
-    const avatar = document.createElement('div');
-    avatar.className = 'message-avatar';
-    avatar.textContent = role === 'bot' ? '🎖️' : '👤';
-
-    const content = document.createElement('div');
-    const bubble = document.createElement('div');
-    bubble.className = 'pvo-chatbot-bubble';
-    bubble.innerHTML = html;
-    content.appendChild(bubble);
-
-    if (chips.length) {
-      const chipRow = document.createElement('div');
-      chipRow.className = 'pvo-chatbot-chips';
-      chips.forEach((chipText) => {
-        const chip = document.createElement('button');
-        chip.className = 'pvo-chatbot-chip';
-        chip.type = 'button';
-        chip.textContent = chipText;
-        chip.addEventListener('click', () => sendChatMessage(chipText));
-        chipRow.appendChild(chip);
-      });
-      content.appendChild(chipRow);
-    }
-
-    message.appendChild(avatar);
-    message.appendChild(content);
-    messagesEl.appendChild(message);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
-
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-
-  function formatChatResponse(text) {
-    return escapeHtml(text)
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-      .replace(/^[-•] (.+)$/gm, '<li>$1</li>')
-      .replace(/(<li>[\s\S]*<\/li>)/, '<ul style="padding-left:18px;margin-top:6px;display:flex;flex-direction:column;gap:4px">$1</ul>')
-      .replace(/\n\n/g, '<br><br>')
-      .replace(/\n/g, '<br>');
-  }
-
-  function addTypingIndicator() {
-    const message = document.createElement('div');
-    message.className = 'pvo-chatbot-message bot';
-    message.id = 'pvoChatbotTyping';
-    message.innerHTML = '<div class="message-avatar">🎖️</div><div class="pvo-chatbot-bubble"><div class="pvo-chatbot-typing"><span></span><span></span><span></span></div></div>';
-    messagesEl.appendChild(message);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
-
-  async function sendChatMessage(overrideText) {
-    if (chatLoading) return;
-    const text = (overrideText || input.value).trim();
-    if (!text) return;
-
-    input.value = '';
-    addChatMessage('user', escapeHtml(text));
-    chatHistory.push({ role: 'user', content: text });
-    chatLoading = true;
-    sendButton.disabled = true;
-    addTypingIndicator();
-
-    try {
-      const response = await fetch(`${pythonURI}/api/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: chatHistory })
-      });
-      const data = await response.json();
-      document.getElementById('pvoChatbotTyping')?.remove();
-      const reply = data.content?.[0]?.text || 'Sorry, I could not get a response. Please call (858) 206-8854.';
-      chatHistory.push({ role: 'assistant', content: reply });
-      addChatMessage('bot', formatChatResponse(reply));
-    } catch (error) {
-      document.getElementById('pvoChatbotTyping')?.remove();
-      addChatMessage('bot', 'Sorry, something went wrong. Please <a href="mailto:contact@powayveterans.org">email us</a> or call (858) 206-8854.');
-    } finally {
-      chatLoading = false;
-      sendButton.disabled = false;
-      input.focus();
-    }
-  }
-
-  fab.addEventListener('click', () => setChatOpen(!widget.classList.contains('is-open')));
-  closeButton.addEventListener('click', () => setChatOpen(false));
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    sendChatMessage();
-  });
-  openLinks.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      setChatOpen(true);
-    });
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && widget.classList.contains('is-open')) {
-      setChatOpen(false);
-      fab.focus();
-    }
-  });
-</script>
-</body>
-</html>

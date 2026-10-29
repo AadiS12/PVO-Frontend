@@ -124,6 +124,15 @@ minima:
     - { platform: youtube, user_url: "https://www.youtube.com/@OpenCodingSociety" } 
   nav_pages:
     - navigation/search.md
+    - navigation/course.md
+    - navigation/calendar.md
+    - navigation/about.md
+    - navigation/member-login.md
+  nav_items:
+    - { title: Search, url: "/search/" }
+    - { title: Calendar, url: "/student/calendar" }
+    - { title: About, url: "/navigation/about.html" }
+    - { title: Member Login, url: "/member-login/" }
 
 gemini_api_key: AIzaSyBWEz5qHeWx5buC4I4dZ2fllaMk3z8k_-w
 

@@ -170,7 +170,8 @@ show_reading_time: false
         document.getElementById('member-uid').value.trim(),
         document.getElementById('member-password').value
       );
-      const accountName = user?.name || user?.uid;
+      const account = user?.user || user?.data || user;
+      const accountName = account?.name || account?.uid || document.getElementById('member-uid').value.trim();
       if (!accountName) {
         throw new Error('Sign-in succeeded, but the server did not return account details.');
       }
@@ -178,6 +179,7 @@ show_reading_time: false
       message.textContent = `Welcome, ${accountName}. You are signed in.`;
       message.classList.add('success');
       form.hidden = true;
+      window.location.assign('../');
     } catch (error) {
       message.textContent = error instanceof Error
         ? error.message
@@ -224,7 +226,8 @@ show_reading_time: false
       }
 
       const user = await authenticate(uid, password);
-      const accountName = user?.name || user?.uid;
+      const account = user?.user || user?.data || user;
+      const accountName = account?.name || account?.uid || uid;
       if (!accountName) {
         throw new Error('Account created, but the server did not return account details after sign-in.');
       }
