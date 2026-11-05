@@ -72,6 +72,26 @@ permalink: /
   <p><strong>Student-built technology serving real veterans.</strong> Every tool on this platform was conceived, designed, and shipped by students at Open Coding Society — connecting veterans with resources, faster.</p>
 </div>
 
+<!-- COMMUNITY CALENDAR -->
+<section class="section calendar-section" id="calendar" aria-labelledby="calendar-title">
+  <div class="section-inner">
+    <p class="section-eyebrow">Community calendar</p>
+    <h2 class="section-title" id="calendar-title">Events built around veterans and community</h2>
+    <p class="section-desc">Find service opportunities, sports events, meetings, and activities. Event details are published by authorized PVO administrators.</p>
+    <div class="calendar-layout">
+      <div class="calendar-list" id="pvo-events" aria-live="polite">
+        <p class="calendar-status">Loading upcoming events…</p>
+      </div>
+      <div class="calendar-card">
+        <span class="calendar-card-icon" aria-hidden="true">📅</span>
+        <h3>Planning something?</h3>
+        <p>Administrators can publish the title, time, location, description, and event image through the secure backend.</p>
+        <a class="btn-primary large-action" href="{{ '/member-login/' | relative_url }}">Sign in to get involved</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PLATFORM TOOLS -->
 <div class="section" id="tools">
   <div class="section-inner">
@@ -129,6 +149,24 @@ permalink: /
     </div>
   </div>
 </div>
+
+<!-- SERVICE BRANCHES -->
+<section class="section branch-section" aria-labelledby="branch-title">
+  <div class="section-inner">
+    <p class="section-eyebrow">Veteran community</p>
+    <h2 class="section-title" id="branch-title">A place for every service story</h2>
+    <p class="section-desc">Choose a service community to find resources and events. These accessible tiles use branch names instead of relying on imagery alone.</p>
+    <div class="branch-grid" role="list">
+      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">★</span> Army</a>
+      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">⚓</span> Navy</a>
+      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">✈</span> Air Force</a>
+      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">🦅</span> Marine Corps</a>
+      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">⚓</span> Coast Guard</a>
+      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">✦</span> Space Force</a>
+      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">✚</span> National Guard</a>
+    </div>
+  </div>
+</section>
 
 <hr class="rule-full" />
 

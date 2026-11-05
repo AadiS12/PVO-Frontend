@@ -20,7 +20,7 @@ owner_name: Open Coding Society
 github_username: open-coding-society 
 github_repo: "pages" 
 url: "https://pvo.opencodingsociety.com"
-baseurl: ""
+baseurl: "/PVO-Frontend"
 future: true
 
 # Exclude from Jekyll watch - these are processed by our conversion scripts
@@ -131,10 +131,9 @@ minima:
   nav_items:
     - { title: Search, url: "/search/" }
     - { title: Calendar, url: "/student/calendar" }
+    - { title: Events, url: "/#calendar" }
     - { title: About, url: "/navigation/about.html" }
     - { title: Member Login, url: "/member-login/" }
-
-gemini_api_key: AIzaSyBWEz5qHeWx5buC4I4dZ2fllaMk3z8k_-w
 
 sass:
   sass_dir: _sass

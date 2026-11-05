@@ -1,5 +1,50 @@
 import { baseurl, pythonURI, fetchOptions } from './api/config.js';
 
+async function loadEvents() {
+  const eventsElement = document.getElementById('pvo-events');
+  if (!eventsElement) return;
+
+  try {
+    const response = await fetch(`${pythonURI}/api/events`, {
+      ...fetchOptions,
+      headers: { ...fetchOptions.headers, Accept: 'application/json' }
+    });
+    if (!response.ok) throw new Error(`Events request failed (${response.status}).`);
+    const events = await response.json();
+    if (!Array.isArray(events) || events.length === 0) {
+      eventsElement.innerHTML = '<p class="calendar-status">No upcoming events are posted yet. Please check back soon.</p>';
+      return;
+    }
+
+    eventsElement.replaceChildren(...events.slice(0, 6).map((event) => {
+      const card = document.createElement('article');
+      card.className = 'event-card';
+      const date = new Date(event.starts_at);
+      const dateText = Number.isNaN(date.getTime())
+        ? event.starts_at
+        : date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+      card.innerHTML = `
+        ${event.image_url ? `<img src="${escapeHtml(event.image_url)}" alt="" class="event-image">` : ''}
+        <div class="event-card-content">
+          <p class="event-date">${escapeHtml(dateText)}</p>
+          <h3>${escapeHtml(event.title)}</h3>
+          <p>${escapeHtml(event.description)}</p>
+          ${event.location ? `<p class="event-location">${escapeHtml(event.location)}</p>` : ''}
+        </div>`;
+      return card;
+    }));
+  } catch (error) {
+    eventsElement.innerHTML = '<p class="calendar-status">The calendar is temporarily unavailable. Please try again later.</p>';
+    console.error('Could not load PVO events:', error);
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text ?? '';
+  return div.innerHTML;
+}
+
   document.addEventListener('DOMContentLoaded', () => {
     const accountLink = document.getElementById('account-link');
     const logoutButton = document.getElementById('logout-button');
@@ -42,6 +87,7 @@ import { baseurl, pythonURI, fetchOptions } from './api/config.js';
       }
     }
     updateAccountLink();
+    loadEvents();
     window.addEventListener('pageshow', updateAccountLink);
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') {
