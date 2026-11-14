@@ -1,0 +1,12 @@
+{%- comment -%}
+  Prints href (and target/rel for outside links) for a menu item from _config.yml.
+  Usage: <a {% include pvo/link-attrs.html url=item.url %}>
+{%- endcomment -%}
+{%- assign pvo_url = include.url | default: '/' -%}
+{%- if pvo_url contains '://' -%}
+href="{{ pvo_url }}" target="_blank" rel="noopener"
+{%- elsif pvo_url contains 'mailto:' or pvo_url contains 'tel:' -%}
+href="{{ pvo_url }}"
+{%- else -%}
+href="{{ pvo_url | relative_url }}"
+{%- endif -%}

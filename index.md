@@ -1,244 +1,238 @@
 ---
-layout: base
+layout: pvo
 title: Poway Veterans Organization
+description: Local veterans helping veterans and their families in Poway, Ramona, and the surrounding area.
 permalink: /
+chatbot: true
+pvo_script: /assets/js/pvo/home.js
 ---
 
-<link rel="stylesheet" href="{{ '/assets/css/pvo-home.css' | relative_url }}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+{% include pvo/member-bar.html %}
 
-<div class="pvo-site">
+<section class="pvo-hero" aria-labelledby="pvo-hero-title">
+  <div class="pvo-wrap pvo-hero__inner">
+    <div class="pvo-hero__copy">
+      <span class="pvo-kicker">Poway &middot; Ramona &middot; Since 2014</span>
+      <h1 class="pvo-hero__title" id="pvo-hero-title">Veterans helping veterans, right here at home.</h1>
+      <p class="pvo-hero__lede">We are a group of Poway-area veterans who help local veterans and their families with home repairs, vehicle repairs, and the everyday jobs that are hard to manage alone. There is no paid staff. More than 95% of what we raise goes straight to veterans.</p>
+      <div class="pvo-hero__actions">
+        <a class="large filledHighlight primary" href="{{ '/prescreener' | relative_url }}">Request assistance</a>
+        <a class="large primary" href="{{ '/volunteer' | relative_url }}">Volunteer with us</a>
+        <a class="large filledTinted primary" href="{{ '/gallery/' | relative_url }}">Photos &amp; videos</a>
+      </div>
+    </div>
 
-<!-- ANNOUNCEMENT BAR -->
-<div class="announcement-bar">
-  ★ &nbsp;PVO Student Platform &nbsp;·&nbsp;
-  <a href="https://pvo.opencodingsociety.com/volunteer" target="_blank" rel="noopener">Volunteer Opportunities Available</a>
-</div>
+    <div class="pvo-branches" aria-labelledby="pvo-branches-title">
+      <div class="pvo-branches__head">
+        <h2 class="pvo-branches__title" id="pvo-branches-title">Every branch. Every era.</h2>
+        <span class="pvo-branches__intro">Whether you wore the uniform in 1968 or last year, this is your community.</span>
+      </div>
+      <ul class="pvo-branches__list">
+        {%- for branch in site.data.pvo_branches %}
+        <li class="pvo-branch pvo-branch--{{ branch.key }}">
+          <a class="pvo-branch__link glowOnHover" href="{{ branch.url }}" target="_blank" rel="noopener">
+            <span class="pvo-branch__medal">
+              {%- if branch.image -%}
+              <img src="{{ branch.image | relative_url }}" alt="">
+              {%- else -%}
+              {% include pvo/emblem.html name=branch.key %}
+              {%- endif -%}
+            </span>
+            <span class="pvo-branch__name">{{ branch.name }}</span>
+            <span class="pvo-branch__est">Est. {{ branch.established }}</span>
+            <span class="pvo-branch__motto">{{ branch.motto }}</span>
+            <span class="pvo-visually-hidden">(official site, opens in a new tab)</span>
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
 
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <a class="logo-wrap" href="https://pvo.opencodingsociety.com/">
-      <div class="logo-emblem">PVO</div>
+<section class="pvo-next-bar" aria-labelledby="pvo-next-label">
+  <div class="pvo-wrap">
+    <div class="pvo-next">
+      <span class="pvo-next__label" id="pvo-next-label">Next on the calendar</span>
+      <div class="pvo-next__slot" data-next-event aria-live="polite">
+        <span class="pvo-next__empty">Loading the calendar…</span>
+      </div>
+      <a class="medium filledTinted primary" href="#calendar">See the full calendar</a>
+    </div>
+  </div>
+</section>
+
+<section class="pvo-section pvo-hub" id="services" aria-labelledby="pvo-hub-title">
+  <div class="pvo-wrap">
+    <div class="pvo-section__head">
+      <span class="pvo-kicker">Start here</span>
+      <h2 class="pvo-section__title" id="pvo-hub-title">What you can do on this site</h2>
+    </div>
+    <ul class="pvo-hub__list">
+      <li>
+        <a class="pvo-hub__item glowOnHover" href="{{ '/prescreener' | relative_url }}">
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="hammer" %}</span>
+          <span class="pvo-hub__name">Request assistance</span>
+          <span class="pvo-hub__desc">Answer a few short questions about what you need. We will tell you whether PVO can take it on or point you to someone who can.</span>
+          <span class="pvo-hub__go">Start a request</span>
+        </a>
+      </li>
+      <li>
+        <a class="pvo-hub__item glowOnHover" href="{{ '/resources/' | relative_url }}">
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="book" %}</span>
+          <span class="pvo-hub__name">Resource Hub</span>
+          <span class="pvo-hub__desc">Trusted help for health care, benefits, housing, work, and family, including the 24/7 Veterans Crisis Line.</span>
+          <span class="pvo-hub__go">Find resources</span>
+        </a>
+      </li>
+      <li>
+        <a class="pvo-hub__item glowOnHover" href="{{ '/volunteer' | relative_url }}">
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="hands" %}</span>
+          <span class="pvo-hub__name">Volunteer</span>
+          <span class="pvo-hub__desc">Help repair a home, work a booth at a fundraiser, or give a neighbor a ride. Every skill level is useful.</span>
+          <span class="pvo-hub__go">Sign up to help</span>
+        </a>
+      </li>
+      <li>
+        <a class="pvo-hub__item glowOnHover" href="{{ '/pvo-chatbot/' | relative_url }}" data-chat-open>
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="chat" %}</span>
+          <span class="pvo-hub__name">Ask a question</span>
+          <span class="pvo-hub__desc">Our assistant answers common questions about services, events, and how to reach us, any time of day.</span>
+          <span class="pvo-hub__go">Open the assistant</span>
+        </a>
+      </li>
+      <li>
+        <a class="pvo-hub__item glowOnHover" href="{{ '/member-profile/' | relative_url }}#survey">
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="clipboard" %}</span>
+          <span class="pvo-hub__name">Veteran profile</span>
+          <span class="pvo-hub__desc">Share your service and interests so we can introduce you to veterans who enjoy the same things. Volunteers can sign up there too.</span>
+          <span class="pvo-hub__go">Take the survey</span>
+        </a>
+      </li>
+      <li>
+        <a class="pvo-hub__item glowOnHover" href="{{ '/jobs/' | relative_url }}">
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="briefcase" %}</span>
+          <span class="pvo-hub__name">Employment Board</span>
+          <span class="pvo-hub__desc">Local openings from employers who want to hire veterans, plus programs for training and federal jobs.</span>
+          <span class="pvo-hub__go">See the job board</span>
+        </a>
+      </li>
+      <li>
+        <a class="pvo-hub__item glowOnHover" href="{{ '/gallery/' | relative_url }}">
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="image" %}</span>
+          <span class="pvo-hub__name">Photos &amp; videos</span>
+          <span class="pvo-hub__desc">Photos and videos from past workdays, fundraisers, and get-togethers.</span>
+          <span class="pvo-hub__go">See the photos</span>
+        </a>
+      </li>
+      <li>
+        <a class="pvo-hub__item glowOnHover" href="https://powayveterans.org/donate/" target="_blank" rel="noopener">
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="heart" %}</span>
+          <span class="pvo-hub__name">Donate</span>
+          <span class="pvo-hub__desc">Donations pay for materials and parts on assistance projects and support other veteran service organizations.</span>
+          <span class="pvo-hub__go">Give to PVO</span>
+        </a>
+      </li>
+      <li data-show="not-staff">
+        <a class="pvo-hub__item glowOnHover" href="#calendar">
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="calendar" %}</span>
+          <span class="pvo-hub__name">Events</span>
+          <span class="pvo-hub__desc">Workdays, fundraisers, meetings, and get-togethers, all in one calendar.</span>
+          <span class="pvo-hub__go">See the calendar</span>
+        </a>
+      </li>
+      <li data-show="staff" hidden>
+        <a class="pvo-hub__item glowOnHover" href="{{ '/admin/' | relative_url }}">
+          <span class="pvo-hub__icon">{% include pvo/icon.html name="key" %}</span>
+          <span class="pvo-hub__name">Admin tools</span>
+          <span class="pvo-hub__desc">Post events with a picture and keep the calendar up to date. Administrators also manage member roles.</span>
+          <span class="pvo-hub__go">Open admin</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="pvo-section pvo-section--alt pvo-calendar" id="calendar" aria-labelledby="pvo-calendar-title">
+  <div class="pvo-wrap">
+    <div class="pvo-section__head pvo-section__head--split">
       <div>
-        <div class="logo-text-main">Poway Veterans Organization</div>
+        <span class="pvo-kicker">Calendar</span>
+        <h2 class="pvo-section__title" id="pvo-calendar-title">Events &amp; gatherings</h2>
       </div>
-    </a>
-    <button class="menu-toggle" id="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false">Menu</button>
-    <nav id="primary-navigation" aria-label="Primary navigation">
-      {%- for item in site.minima.nav_items -%}
-      {% if item.title != 'Member Login' %}
-      <a href="{{ item.url | relative_url }}">{{ item.title | escape }}</a>
-      {% endif %}
-      {%- endfor -%}
-      <a id="account-link" class="account-link" href="{{ '/member-login/' | relative_url }}">Member Login</a>
-      <a href="#tools">Platform Tools</a>
-      <a href="https://pvo.opencodingsociety.com/volunteer" target="_blank" rel="noopener">Volunteer</a>
-      <button id="logout-button" class="logout-button" type="button" hidden>Log out</button>
-      <a href="https://pvo.opencodingsociety.com/prescreener" target="_blank" rel="noopener" class="nav-cta">Check Eligibility</a>
-    </nav>
-  </div>
-</header>
-
-<section class="member-dashboard" id="member-dashboard" aria-live="polite">
-  <div class="member-dashboard-inner">
-    <div class="member-dashboard-copy">
-      <strong id="member-greeting">Welcome back</strong>
-      <span>Your Open Coding Society tools are ready.</span>
+      <p class="pvo-section__note">Workdays, fundraisers, meetings, and get-togethers. Pick a day to see what is on, or open an event for details.</p>
     </div>
-    <div class="member-dashboard-links">
-      <a href="{{ '/profile' | relative_url }}">Profile</a>
-      <a href="{{ '/dashboard' | relative_url }}">Dashboard</a>
-    </div>
-  </div>
-</section>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-stars"></div>
-  <div class="hero-tag">Serving Poway · Ramona · Surrounding Communities</div>
-  <h1>Assisting <span>Poway's Veterans</span><br>with Technology &amp; Community</h1>
-  <p class="hero-mission">Our mission is to provide assistance to veterans or their dependents residing in Poway, Ramona and the surrounding areas — now powered by student-built AI tools and volunteer coordination.</p>
-  <div class="hero-actions">
-    <a href="https://pvo.opencodingsociety.com/prescreener" class="btn-primary" target="_blank" rel="noopener">Apply for Assistance</a>
-    <a href="#tools" class="btn-outline">Explore the Platform</a>
-  </div>
-</section>
-
-<!-- MISSION STRIP -->
-<div class="mission-strip">
-  <p><strong>Student-built technology serving real veterans.</strong> Every tool on this platform was conceived, designed, and shipped by students at Open Coding Society — connecting veterans with resources, faster.</p>
-</div>
-
-<!-- COMMUNITY CALENDAR -->
-<section class="section calendar-section" id="calendar" aria-labelledby="calendar-title">
-  <div class="section-inner">
-    <p class="section-eyebrow">Community calendar</p>
-    <h2 class="section-title" id="calendar-title">Events built around veterans and community</h2>
-    <p class="section-desc">Find service opportunities, sports events, meetings, and activities. Event details are published by authorized PVO administrators.</p>
-    <div class="calendar-layout">
-      <div class="calendar-list" id="pvo-events" aria-live="polite">
-        <p class="calendar-status">Loading upcoming events…</p>
+    <div class="pvo-calendar__layout" data-pvo-calendar>
+      <div class="pvo-cal">
+        <div class="pvo-cal__bar">
+          <h3 class="pvo-cal__title" data-cal-title aria-live="polite">Calendar</h3>
+          <div class="pvo-cal__controls">
+            <button class="small primary pvo-cal__btn" type="button" data-cal-prev aria-label="Previous month">{% include pvo/icon.html name="chevron-left" %}</button>
+            <button class="small primary" type="button" data-cal-today>Today</button>
+            <button class="small primary pvo-cal__btn" type="button" data-cal-next aria-label="Next month">{% include pvo/icon.html name="chevron-right" %}</button>
+          </div>
+        </div>
+        <table class="pvo-cal__grid">
+          <thead><tr data-cal-head></tr></thead>
+          <tbody data-cal-body></tbody>
+        </table>
       </div>
-      <div class="calendar-card">
-        <span class="calendar-card-icon" aria-hidden="true">📅</span>
-        <h3>Planning something?</h3>
-        <p>Administrators can publish the title, time, location, description, and event image through the secure backend.</p>
-        <a class="btn-primary large-action" href="{{ '/member-login/' | relative_url }}">Sign in to get involved</a>
+
+      <div class="pvo-agenda">
+        <div class="pvo-agenda__head">
+          <h3 class="pvo-agenda__title" data-agenda-title>Coming up</h3>
+          <button class="small filledTinted primary" type="button" data-agenda-all hidden>Show all upcoming</button>
+        </div>
+        <ol class="pvo-agenda__list" data-agenda-list></ol>
+        <div class="pvo-agenda__status" data-agenda-status>Loading events…</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PLATFORM TOOLS -->
-<div class="section" id="tools">
-  <div class="section-inner">
-    <p class="section-eyebrow">Platform Tools</p>
-    <h2 class="section-title">Three tools built for real impact</h2>
-    <p class="section-desc">Explore these tools to better use our website</p>
-
-    <div class="tool-grid">
-
-      <!-- 01 Chatbot -->
-      <a href="https://pvo.opencodingsociety.com/pvo-chatbot/" class="tool-card" data-chatbot-open>
-        <div class="card-header">
-          <span class="card-num">01 · AI Assistant</span>
-          <div class="card-icon">💬</div>
-          <h3 class="card-title-text">PVO Chatbot</h3>
-        </div>
-        <div class="card-body">
-          <span class="card-category-tag">AI Assistant</span>
-          <p class="card-desc-text">An AI assistant built directly into the platform. Ask it anything — about volunteering, navigating the site, or how to get started — and it responds instantly in plain language, no experience required.</p>
-          <p class="card-highlight-box"><strong>Why it matters:</strong> Not everyone knows where to begin. The chatbot removes that friction and makes the platform accessible to any visitor.</p>
-          <span class="card-link">Open Chatbot <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </a>
-
-      <!-- 02 Prescreener -->
-      <a href="https://pvo.opencodingsociety.com/prescreener" class="tool-card" target="_blank" rel="noopener">
-        <div class="card-header">
-          <span class="card-num">02 · Fast Prescreener</span>
-          <div class="card-icon">⭐</div>
-          <h3 class="card-title-text">Veteran Eligibility Prescreener</h3>
-        </div>
-        <div class="card-body">
-          <span class="card-category-tag">Fast Prescreener</span>
-          <p class="card-desc-text">Veterans can instantly find out whether they qualify for PVO support Enter a few details and our trained machine learning model provides an immediate eligibility result.</p>
-          <p class="card-highlight-box"><strong>Why it matters:</strong> Powered by real data, this tool gives veterans a clear, immediate answer — so the right people get connected to resources faster.</p>
-          <span class="card-link">Check Eligibility <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </a>
-
-      <!-- 03 Volunteer Hub -->
-      <a href="https://pvo.opencodingsociety.com/volunteer" class="tool-card" target="_blank" rel="noopener">
-        <div class="card-header">
-          <span class="card-num">03 · Community</span>
-          <div class="card-icon">🤝</div>
-          <h3 class="card-title-text">Volunteer Hub</h3>
-        </div>
-        <div class="card-body">
-          <span class="card-category-tag">Community</span>
-          <p class="card-desc-text">A dedicated space to find, sign up for, and track volunteer opportunities. It connects students who want to give back with the events and causes that need them most.</p>
-          <p class="card-highlight-box"><strong>Why it matters:</strong> Community service is central to what Open Coding Society stands for. This tool turns good intentions into organized, real-world effort.</p>
-          <span class="card-link">Get Involved <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-        </div>
-      </a>
-
+<section class="pvo-section pvo-home-recaps" aria-labelledby="pvo-recaps-title" hidden data-home-recaps>
+  <div class="pvo-wrap">
+    <div class="pvo-section__head pvo-section__head--split">
+      <div>
+        <span class="pvo-kicker">Photos &amp; videos</span>
+        <h2 class="pvo-section__title" id="pvo-recaps-title">From recent events</h2>
+      </div>
+      <a class="medium filledTinted primary" href="{{ '/gallery/' | relative_url }}">See all photos &amp; videos</a>
     </div>
-  </div>
-</div>
-
-<!-- SERVICE BRANCHES -->
-<section class="section branch-section" aria-labelledby="branch-title">
-  <div class="section-inner">
-    <p class="section-eyebrow">Veteran community</p>
-    <h2 class="section-title" id="branch-title">A place for every service story</h2>
-    <p class="section-desc">Choose a service community to find resources and events. These accessible tiles use branch names instead of relying on imagery alone.</p>
-    <div class="branch-grid" role="list">
-      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">★</span> Army</a>
-      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">⚓</span> Navy</a>
-      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">✈</span> Air Force</a>
-      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">🦅</span> Marine Corps</a>
-      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">⚓</span> Coast Guard</a>
-      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">✦</span> Space Force</a>
-      <a class="branch-tile" role="listitem" href="#tools"><span aria-hidden="true">✚</span> National Guard</a>
-    </div>
+    <ul class="pvo-recaps" data-recaps></ul>
   </div>
 </section>
 
-<hr class="rule-full" />
-
-<!-- ABOUT -->
-<div class="section" id="about">
-  <div class="section-inner">
-    <p class="section-eyebrow">About PVO</p>
-    <h2 class="section-title">Poway Veterans Organization</h2>
-    <div class="about-copy">
-      <p>We are a group of veterans from the Poway area that established our organization in 2014. The mission of the Poway Veterans Organization (PVO) is to provide various types of assistance to veterans and their families residing in Poway, Ramona and surrounding areas. Our objective is to reach out to area veterans who are in need and to do what we can to help meet their needs. Specifically we are providing assistance in areas such as home repairs and upkeep, repairs on personal transportation vehicles and similar activities that are requested by the veterans/families that apply for our assistance.</p>
-      <p>The PVO has no paid staff members, capital assets or buildings/equipment to maintain. We have a small storage shed located at Lake Poway where we keep various PVO materials, such as a pop-up that is used during our fund raising events. The City of Poway provides a secure facility for this storage shed at no cost to PVO.</p>
-      <p>The PVO annual overhead costs for operation include purchasing required liability insurance for our volunteers and board members. We also pay annual fees for our web site and land-line telephone service. State and federal licensing/operation fees are also required annually. Miscellaneous costs (printing, stamps, etc) are kept to a minimum.</p>
-      <p>By keeping PVO operating costs under rigid control, the PVO dedicates more than 95% of our funds to veteran assistance projects and providing financial donations to other veteran service organizations, such as the Disabled American Veterans. At all times we strive to be good stewards of funds donated by the friends of PVO.</p>
+<section class="pvo-section pvo-about" id="about" aria-labelledby="pvo-about-title">
+  <div class="pvo-wrap pvo-about__layout">
+    <div class="pvo-about__text">
+      <span class="pvo-kicker">About PVO</span>
+      <h2 class="pvo-section__title" id="pvo-about-title">Local veterans, looking out for each other</h2>
+      <p>We are a group of veterans from the Poway area who started this organization in 2014. Our mission is to provide assistance to veterans and their families living in Poway, Ramona, and the surrounding areas: to reach the veterans who need help, and do what we can to meet that need.</p>
+      <p>Most of our work is hands-on. We help with home repairs and upkeep, repairs on personal vehicles, and similar jobs requested by the veterans and families who apply for assistance.</p>
+      <p>PVO has no paid staff and no buildings or equipment to maintain. Our only overhead is volunteer liability insurance, our website and phone line, and required state and federal fees. That lets us put more than 95% of our funds into veteran assistance projects and into donations to other veteran service organizations, such as the Disabled American Veterans.</p>
     </div>
+    <dl class="pvo-facts">
+      <div class="pvo-facts__row"><dt>2014</dt><dd>Founded by Poway-area veterans</dd></div>
+      <div class="pvo-facts__row"><dt>0</dt><dd>Paid staff. Everyone is a volunteer</dd></div>
+      <div class="pvo-facts__row"><dt>95%+</dt><dd>Of funds go to veteran assistance</dd></div>
+      <div class="pvo-facts__row"><dt>501(c)(3)</dt><dd>Registered nonprofit organization</dd></div>
+    </dl>
   </div>
-</div>
+</section>
 
-<!-- DONATE BANNER -->
-<div class="donate-banner">
-  <h2>Help Us Help Our Veterans</h2>
-  <p>Your donations let us help more veterans in the Poway community. Every contribution makes a direct difference in the lives of those who served.</p>
-  <a href="https://powayveterans.org/donate/" class="btn-primary" target="_blank" rel="noopener">Donate to PVO</a>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
+<section class="pvo-donate" aria-labelledby="pvo-donate-title">
+  <div class="pvo-wrap pvo-donate__inner">
     <div>
-      <div class="footer-brand-name">Poway Veterans Organization</div>
-      <p class="footer-tagline">Assisting veterans or their dependents in Poway, Ramona, and the surrounding areas.</p>
+      <h2 class="pvo-donate__title" id="pvo-donate-title">Help us help our veterans</h2>
+      <p>Your donation buys lumber, parts, and supplies for veterans in our community. Every contribution goes to work locally.</p>
     </div>
-    <div class="footer-links">
-      <a href="https://pvo.opencodingsociety.com/pvo-chatbot/" data-chatbot-open>PVO Chatbot</a>
-      <a href="https://pvo.opencodingsociety.com/prescreener" target="_blank" rel="noopener">Eligibility Prescreener</a>
-      <a href="https://pvo.opencodingsociety.com/volunteer" target="_blank" rel="noopener">Volunteer Hub</a>
-      <a href="https://powayveterans.org/" target="_blank" rel="noopener">PVO Main Site</a>
+    <div class="pvo-donate__actions">
+      <a class="large filledHighlight primary" href="https://powayveterans.org/donate/" target="_blank" rel="noopener">Donate to PVO</a>
+      <a class="large primary" href="{{ '/volunteer' | relative_url }}">Give your time</a>
     </div>
   </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">Open Coding Society &copy; 2025 &nbsp;·&nbsp; Platform built by students</span>
-    <span class="footer-org-tag">PVO &nbsp;·&nbsp; 501(c)3 Organization</span>
-  </div>
-</footer>
+</section>
 
-<button class="pvo-chatbot-fab" id="pvoChatbotFab" type="button" aria-label="Open PVO assistant" aria-controls="pvoChatbotWidget" aria-expanded="false">🎖️</button>
-
-<aside class="pvo-chatbot-widget" id="pvoChatbotWidget" aria-label="PVO Virtual Assistant" aria-hidden="true" inert>
-  <div class="pvo-chatbot-topbar">
-    <div class="pvo-chatbot-avatar">🎖️</div>
-    <div class="pvo-chatbot-title">
-      <strong>PVO Virtual Assistant</strong>
-      <span>Help and site guide</span>
-    </div>
-    <button class="pvo-chatbot-close" id="pvoChatbotClose" type="button" aria-label="Close PVO assistant">&times;</button>
-  </div>
-  <div class="pvo-prescreener-strip">
-    <div class="pvo-prescreener-copy">
-      <strong>Veteran Eligibility Prescreener</strong>
-      <span>Start with the quick eligibility check.</span>
-    </div>
-    <a class="pvo-prescreener-link" href="https://pvo.opencodingsociety.com/prescreener" target="_blank" rel="noopener">Check Eligibility</a>
-  </div>
-  <div class="pvo-chatbot-messages" id="pvoChatbotMessages" aria-live="polite"></div>
-  <form class="pvo-chatbot-form" id="pvoChatbotForm">
-    <input class="pvo-chatbot-input" id="pvoChatbotInput" type="text" placeholder="Ask about PVO..." autocomplete="off" />
-    <button class="pvo-chatbot-send" id="pvoChatbotSend" type="submit" aria-label="Send message">
-      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-    </button>
-  </form>
-</aside>
-
-</div>
-
-
-<script type="module" src="{{ '/assets/js/pvo-home.js' | relative_url }}"></script>
+{% include pvo/media-dialog.html %}

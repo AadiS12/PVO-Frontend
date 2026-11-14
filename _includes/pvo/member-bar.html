@@ -1,0 +1,51 @@
+{%- comment -%}
+  Member login + survey strip shown at the top of the homepage.
+  Signed out: quick login form, create account, continue as guest, and the survey.
+  Signed in: welcome message with profile, survey, admin (admins only), and log out.
+{%- endcomment -%}
+<section class="pvo-memberbar" aria-label="Member login and survey">
+  <div class="pvo-wrap">
+    <div class="pvo-memberbar__card">
+
+      <div class="pvo-memberbar__login" data-show="signed-out">
+        <form class="pvo-memberbar__form" data-quick-login novalidate>
+          <h2 class="pvo-memberbar__title">Member Login</h2>
+          <div class="form-group pvo-memberbar__field">
+            <label class="pvo-visually-hidden" for="quick-uid">Username or email</label>
+            <input id="quick-uid" name="uid" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Username or email">
+          </div>
+          <div class="form-group pvo-memberbar__field">
+            <label class="pvo-visually-hidden" for="quick-password">Password</label>
+            <input id="quick-password" name="password" type="password" autocomplete="current-password" placeholder="Password">
+          </div>
+          <button class="medium filledHighlight primary" type="submit">Log in</button>
+        </form>
+        <div class="pvo-memberbar__more">
+          <a href="{{ '/member-login/' | relative_url }}#create">Create an account</a>
+          <span aria-hidden="true">&middot;</span>
+          <button class="small secondary" type="button" data-quick-guest>Continue as guest</button>
+          <div class="pvo-status" role="status" aria-live="polite" data-quick-status></div>
+        </div>
+      </div>
+
+      <div class="pvo-memberbar__welcome" data-show="signed-in" hidden>
+        <div>
+          <h2 class="pvo-memberbar__title">Welcome back, <span data-pvo-name>member</span></h2>
+          <span class="pvo-memberbar__sub">Signed in as <span data-pvo-role>Member</span>. Your PVO member tools are ready.</span>
+        </div>
+        <div class="pvo-memberbar__actions">
+          <a class="medium primary" href="{{ '/member-profile/' | relative_url }}">My Profile</a>
+          <a class="medium filledTinted primary" href="{{ '/member-profile/' | relative_url }}#survey">Member Survey</a>
+          <a class="medium primary" href="{{ '/admin/' | relative_url }}" data-show="staff" hidden>Admin Tools</a>
+          <button class="medium secondary" type="button" data-pvo-signout>Log out</button>
+        </div>
+      </div>
+
+      <div class="pvo-memberbar__survey" data-show="signed-out">
+        <span class="pvo-memberbar__survey-text"><strong>Veteran profile</strong> Share your service and interests so we can connect you with veterans who enjoy the same things.</span>
+        <a class="medium filledTinted primary" href="{{ '/member-profile/' | relative_url }}#survey">Take the survey</a>
+      </div>
+
+    </div>
+  </div>
+</section>

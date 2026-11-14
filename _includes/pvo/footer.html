@@ -1,0 +1,49 @@
+<footer class="pvo-footer">
+  <div class="pvo-wrap pvo-footer__grid">
+    <div class="pvo-footer__about">
+      <span class="pvo-footer__name">Poway Veterans Organization</span>
+      <p>An all-volunteer 501(c)(3) assisting veterans and their dependents in Poway, Ramona, and the surrounding areas.</p>
+      <p class="pvo-footer__contact">
+        <a href="{{ site.pvo_contact.phone_link }}">{{ site.pvo_contact.phone }}</a>
+        <a href="mailto:{{ site.pvo_contact.email }}">{{ site.pvo_contact.email }}</a>
+      </p>
+    </div>
+
+    <nav class="pvo-footer__nav" aria-label="Footer">
+      <div class="pvo-footer__col">
+        <span class="pvo-footer__heading">Visit</span>
+        <ul>
+          {%- for item in site.pvo_menu.main %}{% unless item.children %}
+          <li><a {% include pvo/link-attrs.html url=item.url %}>{{ item.title }}</a></li>
+          {%- endunless %}{% endfor %}
+        </ul>
+      </div>
+      {%- for item in site.pvo_menu.main %}{% if item.children %}
+      <div class="pvo-footer__col">
+        <span class="pvo-footer__heading">{{ item.title }}</span>
+        <ul>
+          {%- for child in item.children %}
+          <li><a {% include pvo/link-attrs.html url=child.url %}>{{ child.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+      {%- endif %}{% endfor %}
+      <div class="pvo-footer__col">
+        <span class="pvo-footer__heading">Members</span>
+        <ul>
+          {%- for item in site.pvo_menu.account %}
+          <li data-show="{{ item.show }}"{% unless item.show == 'signed-out' %} hidden{% endunless %}><a {% include pvo/link-attrs.html url=item.url %}>{{ item.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="pvo-wrap pvo-footer__crisis">
+    <p><strong>Veterans Crisis Line:</strong> dial <a href="tel:988">988, then press 1</a>, text <a href="sms:838255">838255</a>, or <a href="https://www.veteranscrisisline.net/get-help-now/chat/" target="_blank" rel="noopener">chat online</a>. Free and confidential, 24/7.</p>
+  </div>
+  <div class="pvo-wrap pvo-footer__base">
+    <p>&copy; {{ site.time | date: '%Y' }} Poway Veterans Organization. Website built by students at Open Coding Society.</p>
+    <p><a href="{{ site.pvo_contact.website }}" target="_blank" rel="noopener">powayveterans.org</a></p>
+  </div>
+</footer>

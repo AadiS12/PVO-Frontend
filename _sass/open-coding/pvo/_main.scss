@@ -1,0 +1,30 @@
+// Poway Veterans Organization pages (`layout: pvo`), built on the Open Coding Society
+// design system ("Aesthetihawk"):
+//   - OCS elements are used directly in the HTML: button classes (small/medium/large +
+//     primary/secondary/filledHighlight/filledTinted), .form-group fields, .switch toggles,
+//     .login-container/.login-card/.signup-card, and the .tintedGlass / .glowOnHover materials.
+//   - OCS typography (Verdana, white headings, light paragraphs, light-blue links) is left as is.
+//   - Colours come from the OCS CSS custom properties, so the accessibility toolbar's colour
+//     themes (_themes.scss) can restyle the OCS components the same way the OCS ThemeEngine does.
+//   - These partials only add PVO layout, using OCS mixins and OCS colour/spacing variables.
+// Imported last in open-coding/_main.scss; every rule is scoped to body.pvo, a pvo- class,
+// or the data-pvo-* settings on <html> that only PVO pages set.
+
+// OCS mixins (same imports other OCS partials such as calendar.scss and pause-modal.scss use)
+@import "../mixins/buttons";
+@import "../mixins/panel";
+@import "../mixins/forms";
+@import "../mixins/modals";
+
+@import "tokens";
+@import "base";
+@import "header";
+@import "memberbar";
+@import "home";
+@import "calendar";
+@import "account";
+@import "resources";
+@import "chat";
+@import "footer";
+@import "a11y";
+@import "themes";

@@ -1,0 +1,40 @@
+# Branches shown near the top of the PVO homepage, in order of precedence.
+#   key    Picks the drawn emblem (_includes/pvo/emblem.html) and the colour
+#          ($pvo-branch-colors in _sass/open-coding/pvo/_tokens.scss).
+#   image  Optional. Path to an approved emblem image, e.g. /images/pvo/branches/army.png.
+#          When set it replaces the drawn emblem.
+- key: army
+  name: Army
+  established: 1775
+  motto: This We'll Defend
+  url: https://www.army.mil/
+- key: marine-corps
+  name: Marine Corps
+  established: 1775
+  motto: Semper Fidelis
+  url: https://www.marines.mil/
+- key: navy
+  name: Navy
+  established: 1775
+  motto: Non Sibi Sed Patriae
+  url: https://www.navy.mil/
+- key: air-force
+  name: Air Force
+  established: 1947
+  motto: Aim High, Fly-Fight-Win
+  url: https://www.af.mil/
+- key: space-force
+  name: Space Force
+  established: 2019
+  motto: Semper Supra
+  url: https://www.spaceforce.mil/
+- key: coast-guard
+  name: Coast Guard
+  established: 1790
+  motto: Semper Paratus
+  url: https://www.uscg.mil/
+- key: national-guard
+  name: National Guard
+  established: 1636
+  motto: Always Ready, Always There
+  url: https://www.nationalguard.mil/

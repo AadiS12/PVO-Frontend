@@ -128,12 +128,48 @@ minima:
     - navigation/calendar.md
     - navigation/about.md
     - navigation/member-login.md
-  nav_items:
-    - { title: Search, url: "/search/" }
-    - { title: Calendar, url: "/student/calendar" }
-    - { title: Events, url: "/#calendar" }
-    - { title: About, url: "/navigation/about.html" }
-    - { title: Member Login, url: "/member-login/" }
+
+# PVO site menu
+# -------------
+# Builds the header and footer of every page that uses `layout: pvo`.
+#   url       Site paths like "/volunteer" get the baseurl added automatically.
+#             Full links (https://, mailto:, tel:) are used as written; https:// opens in a new tab.
+#   children  Turns the item into a drop-down menu. `note` is the short line under each link.
+#   show      Account items only: signed-out, signed-in, or admin.
+#   greet     Account item shown as "Welcome, <name>" in the header once signed in.
+pvo_menu:
+  main:
+    - title: Events
+      url: /#calendar
+    - title: Survey
+      url: /member-profile/#survey
+    - title: Get Help
+      children:
+        - { title: Request assistance, url: /prescreener, note: "A few questions to see how PVO can help" }
+        - { title: Resource Hub, url: /resources/, note: "Health care, benefits, housing, and the Crisis Line" }
+        - { title: Employment Board, url: /jobs/, note: "Local openings and job programs for veterans" }
+        - { title: Ask the assistant, url: /pvo-chatbot/, note: "Quick answers about services and events" }
+        - { title: Contact PVO, url: "mailto:contact@powayveterans.org", note: "contact@powayveterans.org" }
+    - title: Get Involved
+      children:
+        - { title: Volunteer, url: /volunteer, note: "Help on repair projects and at events" }
+        - { title: Photos & videos, url: /gallery/, note: "Pictures and clips from past events" }
+        - { title: Donate, url: "https://powayveterans.org/donate/", note: "Funds go straight to veteran assistance" }
+    - title: About
+      url: /#about
+  account:
+    - { title: Member Login, url: /member-login/, show: signed-out }
+    - { title: My Profile, url: /member-profile/, show: signed-in, greet: true }
+    - { title: Admin, url: /admin/, show: staff }   # administrators and event organizers
+  cta:
+    title: Request assistance
+    url: /prescreener
+
+pvo_contact:
+  phone: "(858) 206-8854"
+  phone_link: "tel:+18582068854"
+  email: contact@powayveterans.org
+  website: https://powayveterans.org/
 
 sass:
   sass_dir: _sass

@@ -1,0 +1,16 @@
+{%- comment -%}
+  A grid of OCS .switch toggles that share one name.
+  Usage: {% include pvo/switch-list.html name="interests" options="Fishing|Golf" green=true %}
+{%- endcomment -%}
+{%- assign switch_options = include.options | split: "|" -%}
+<div class="pvo-switches">
+  {%- for option in switch_options %}
+  <label class="switch">
+    <span class="toggle">
+      <input type="checkbox" name="{{ include.name }}" value="{{ option }}">
+      <span class="slider{% if include.green %} green{% endif %}"></span>
+    </span>
+    <span class="label-text">{{ option }}</span>
+  </label>
+  {%- endfor %}
+</div>

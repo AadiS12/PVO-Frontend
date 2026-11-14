@@ -1,0 +1,357 @@
+// Base for PVO pages. Fonts, text colours, inputs, buttons and toggles all come from OCS;
+// this file only adds what OCS components need to work well on these pages.
+
+body.pvo {
+  // native controls (date/time pickers, scrollbars, select menus) match the OCS dark theme
+  color-scheme: dark;
+
+  // minima sets body text in px; rem lets the text-size setting scale it (16px by default)
+  font-size: 1rem;
+
+  // OCS button and form sizes, re-expressed in rem: identical at the default text size,
+  // and they grow with the text-size setting
+  .small,
+  .medium {
+    height: auto;
+    font-size: pvo-rem(15px);
+    line-height: pvo-rem(20px);
+  }
+
+  .small {
+    min-height: pvo-rem(28px);
+  }
+
+  .medium {
+    min-height: pvo-rem(35px);
+  }
+
+  .large {
+    height: auto;
+    min-height: pvo-rem(50px);
+    font-size: pvo-rem(17px);
+    line-height: pvo-rem(22px);
+  }
+
+  .form-group label,
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: pvo-rem(14px);
+  }
+
+  .label-text {
+    font-size: 1rem;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  // open-coding/calendar.scss hides every h1 site-wide and documentation.scss gives it a
+  // green glow; PVO pages need a plain, visible page title
+  h1 {
+    display: block;
+    text-shadow: none;
+  }
+
+  // icons are decorative; the OCS analytics script errors when a click lands on an SVG
+  svg {
+    pointer-events: none;
+  }
+
+  // OCS buttons use the browser's button font; match the OCS page font (Verdana) instead
+  button {
+    font-family: inherit;
+  }
+
+  // minima's dark skin stripes table rows; PVO's calendar grid is not a data table
+  .pvo-cal__grid tr {
+    background-color: transparent;
+  }
+}
+
+// ---- OCS button classes on links ------------------------------------------------
+// OCS button classes are written for <button>. PVO also uses them on links (<a>),
+// which OCS would otherwise colour light blue and underline.
+body.pvo {
+  a.small,
+  a.medium,
+  a.large,
+  label.small,
+  label.medium,
+  label.large {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-xxs;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  // text on filled OCS buttons stays white in every theme (accent buttons follow --pvo-on-accent)
+  a.primary,
+  a.secondary,
+  label.primary {
+    color: $white1 !important;
+  }
+
+  a.filledHighlight,
+  .filledHighlight {
+    color: $c-on-accent !important;
+  }
+
+  // OCS links are not underlined; inside running text they need it to stand apart
+  // from the surrounding words (WCAG link-in-text-block)
+  p a,
+  .pvo-notice a,
+  .pvo-chat__notice a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  a.filledTinted,
+  .filledTinted {
+    // OCS tinted text (#007aff) is 4.0:1 on its tint; OCS light blue is 7.5:1
+    color: $c-link !important;
+  }
+
+  // OCS hover-darken/active-darken need a real colour; themes swap in --pvo-accent (see _themes.scss)
+  .filledHighlight {
+    background-color: $pvo-blue;
+    @include hover-darken($pvo-blue);
+    @include active-darken($pvo-blue);
+  }
+
+  .small,
+  .medium,
+  .large {
+    &:focus-visible {
+      @include pvo-focus;
+    }
+  }
+
+  button:disabled {
+    @include disabled;
+  }
+}
+
+// ---- layout ---------------------------------------------------------------------
+
+.pvo-wrap {
+  width: 100%;
+  max-width: $pvo-max-width + 2 * $spacing-lg;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+
+  @include pvo-mobile {
+    padding: 0 $spacing-md;
+  }
+}
+
+.pvo-main {
+  display: block;
+  min-height: 50vh;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.pvo-visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pvo-skip {
+  position: absolute;
+  top: -100px;
+  left: $spacing-md;
+  z-index: $z-modal;
+  padding: $spacing-xs $spacing-md;
+  background: $c-accent;
+  border-radius: 0 0 $radius-xs $radius-xs;
+  color: $c-on-accent !important;
+  font-weight: 700;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+.pvo-kicker {
+  @include pvo-kicker;
+  margin-bottom: $spacing-xxs;
+}
+
+.pvo-section {
+  padding: 64px 0;
+
+  @include pvo-mobile {
+    padding: 44px 0;
+  }
+
+  &--alt {
+    background: $c-band;
+    border-top: 1px solid $c-rule;
+    border-bottom: 1px solid $c-rule;
+  }
+}
+
+.pvo-section__head {
+  margin-bottom: $spacing-xl;
+
+  &--split {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: $spacing-md $spacing-xl * 2;
+  }
+}
+
+.pvo-section__title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.25;
+
+  @include pvo-mobile {
+    font-size: 1.6rem;
+  }
+}
+
+.pvo-section__note {
+  max-width: 440px;
+  margin: 0;
+}
+
+// ---- OCS card surface + helpers ----------------------------------------------------
+
+.pvo-card {
+  @include pvo-card;
+}
+
+.pvo-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-xs $spacing-md;
+  margin-bottom: $spacing-sm;
+}
+
+.pvo-card__title {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+
+.pvo-card__subtitle {
+  margin: 0 0 $spacing-xxs;
+  font-size: 1.1rem;
+}
+
+.pvo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.pvo-hint {
+  display: block;
+  margin-top: $spacing-xxxs;
+  color: $c-muted;
+  font-size: pvo-rem($text-sm);
+}
+
+.pvo-icon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+// Messages after an action, using the OCS status-indicator colours
+.pvo-status {
+  margin-top: $spacing-sm;
+  padding: $status-indicator-item-padding;
+  border-radius: $status-indicator-item-border-radius;
+  color: $c-strong;
+  font-size: pvo-rem($text-md);
+  font-weight: $status-indicator-text-weight;
+
+  &:empty {
+    display: none;
+  }
+
+  &.is-success {
+    @include status-indicator-state($status-indicator-success-bg, $status-indicator-success-border);
+  }
+
+  &.is-error {
+    @include status-indicator-state($status-indicator-error-bg, $status-indicator-error-border);
+  }
+
+  &.is-info {
+    @include status-indicator-state($status-indicator-pending-bg, $status-indicator-pending-border);
+  }
+}
+
+.pvo-notice {
+  @include status-indicator-state($status-indicator-pending-bg, $status-indicator-pending-border);
+  padding: $spacing-sm;
+  border-radius: $status-indicator-item-border-radius;
+  color: $c-text;
+  font-size: pvo-rem($text-md);
+}
+
+.pvo-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px $spacing-xs;
+  background: $c-tint;
+  border-radius: 999px;
+  color: $c-link;
+  font-size: pvo-rem($text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+
+  // staff roles (Admin Tools access) use the accent fill; member types keep the tint
+  &--admin,
+  &--organizer {
+    background: $c-accent;
+    color: $c-on-accent;
+  }
+
+  &--guest {
+    background: $status-indicator-pending-bg;
+    color: $c-warn-text;
+  }
+
+  &--past {
+    margin-left: $spacing-xxs;
+    background: $c-hover;
+    color: $c-muted;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.pvo *,
+  body.pvo *::before,
+  body.pvo *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -40,3 +40,6 @@ textarea,
 select {
     background-color: $background;
 }
+
+// Poway Veterans Organization pages (layout: pvo). Keep last so it can out-rank the global rules above.
+@import "pvo/main";

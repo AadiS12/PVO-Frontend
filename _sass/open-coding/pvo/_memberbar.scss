@@ -1,0 +1,160 @@
+// Member login + survey strip at the top of the homepage (OCS card surface, OCS inputs and buttons).
+
+.pvo-memberbar {
+  padding: $spacing-md 0;
+  background: var(--bg-0);
+  border-bottom: 1px solid $c-rule;
+}
+
+.pvo-memberbar__card {
+  @include pvo-card($spacing-md $spacing-lg);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md $spacing-xl;
+
+  @include pvo-mobile {
+    padding: $spacing-md;
+  }
+}
+
+.pvo-memberbar__title {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+// ---- signed out: quick login ------------------------------------------------------
+
+.pvo-memberbar__login {
+  display: flex;
+  flex: 1 1 600px;
+  flex-direction: column;
+  gap: $spacing-xs;
+  min-width: 0;
+}
+
+.pvo-memberbar__form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-sm;
+
+  .pvo-memberbar__title {
+    margin-right: $spacing-xxs;
+  }
+}
+
+// an OCS .form-group, without its bottom margin, sitting inline
+.pvo-memberbar__field {
+  flex: 1 1 160px;
+  min-width: 140px;
+  margin: 0;
+}
+
+.pvo-memberbar__more {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-xxs $spacing-xs;
+  color: $c-muted;
+  font-size: pvo-rem($text-md);
+
+  .pvo-status {
+    flex-basis: 100%;
+    margin-top: $spacing-xxs;
+  }
+}
+
+// ---- survey ---------------------------------------------------------------------
+
+.pvo-memberbar__survey {
+  display: flex;
+  flex: 0 1 430px;
+  align-items: center;
+  gap: $spacing-md;
+  padding-left: $spacing-xl;
+  border-left: 1px solid $c-rule;
+
+  @include pvo-tablet {
+    flex-basis: 100%;
+    padding: $spacing-md 0 0;
+    border-top: 1px solid $c-rule;
+    border-left: 0;
+  }
+
+  @include pvo-mobile {
+    flex-direction: column;
+    align-items: stretch;
+
+    .medium {
+      width: 100%;
+    }
+  }
+}
+
+.pvo-memberbar__survey-text {
+  color: $c-text;
+  font-size: pvo-rem($text-md);
+  line-height: 1.45;
+
+  strong {
+    display: block;
+    color: $c-strong;
+    font-size: 1rem;
+  }
+}
+
+// ---- signed in ------------------------------------------------------------------
+
+.pvo-memberbar__welcome {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-sm $spacing-lg;
+
+  .pvo-memberbar__title {
+    white-space: normal;
+  }
+}
+
+.pvo-memberbar__sub {
+  display: block;
+  margin-top: 2px;
+  color: $c-muted;
+  font-size: pvo-rem($text-md);
+}
+
+.pvo-memberbar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+
+  @include pvo-mobile {
+    width: 100%;
+
+    .medium {
+      flex: 1 1 140px;
+    }
+  }
+}
+
+@include pvo-mobile {
+  .pvo-memberbar__form {
+    .pvo-memberbar__title {
+      flex-basis: 100%;
+    }
+
+    .pvo-memberbar__field {
+      flex-basis: 100%;
+    }
+
+    .medium {
+      width: 100%;
+    }
+  }
+}

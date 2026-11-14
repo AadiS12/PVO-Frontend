@@ -1,0 +1,411 @@
+// PVO community calendar: month grid, agenda, event cards, and event dialog.
+// Colours follow the OCS calendar theme (open-coding/calendar.scss): --bg-0 cells,
+// --ui-border lines, OCS blue for today, OCS modal mixins for the dialog.
+
+// The section keeps id="calendar" so /#calendar links work, but OCS calendar.scss
+// styles #calendar for the student FullCalendar page (margin, overflow).
+body.pvo #calendar.pvo-calendar {
+  margin-left: 0;
+  overflow: visible;
+}
+
+.pvo-calendar__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr);
+  align-items: start;
+  gap: $spacing-xl;
+
+  @include pvo-tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.pvo-cal,
+.pvo-agenda {
+  @include pvo-card;
+  border: 1px solid $c-rule;
+}
+
+.pvo-cal {
+  @include pvo-mobile {
+    padding: $spacing-sm $spacing-xxs;
+  }
+}
+
+.pvo-cal__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+  padding: 0 $spacing-xxxs;
+}
+
+.pvo-cal__title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.pvo-cal__controls {
+  display: flex;
+  gap: $spacing-xxs;
+}
+
+.pvo-cal__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  .pvo-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.pvo-cal__grid {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  th {
+    padding: $spacing-xxxs 0 $spacing-xs;
+    background: none;
+    border: 0;
+    color: $c-muted;
+    font-size: pvo-rem($text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+
+    abbr {
+      border: 0;
+      text-decoration: none;
+      cursor: default;
+    }
+  }
+
+  td {
+    padding: 2px;
+    background: none;
+    border: 0;
+    vertical-align: top;
+  }
+}
+
+.pvo-cal__day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  height: 88px;
+  padding: $spacing-xxxs;
+  overflow: hidden;
+  background: var(--bg-0);
+  border: 1px solid var(--ui-border);
+  border-radius: $radius-xs;
+  color: $c-strong;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color $transition-fast, background-color $transition-fast;
+
+  &.is-outside {
+    background: $c-surface-2;
+
+    .pvo-cal__num {
+      color: $c-muted;
+      font-weight: 400;
+    }
+  }
+
+  &.has-events {
+    background: $c-tint-soft;
+  }
+
+  &.is-today .pvo-cal__num {
+    background: $c-accent;
+    color: $c-on-accent;
+  }
+
+  &.is-selected {
+    border: 2px solid $c-link;
+    padding: $spacing-xxxs - 1px;
+  }
+
+  // after the states above; also replaces the grey OCS button:hover fill
+  &:hover,
+  &:active {
+    background: var(--panel-mid);
+    border-color: $c-link;
+  }
+
+  &:focus-visible {
+    @include pvo-focus;
+    z-index: 1;
+  }
+
+  @include pvo-mobile {
+    align-items: center;
+    height: 50px;
+    padding: $spacing-xxxs 2px;
+  }
+}
+
+.pvo-cal__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 4px;
+  border-radius: 13px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.pvo-cal__chips {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  margin-top: 4px;
+
+  @include pvo-mobile {
+    display: none;
+  }
+}
+
+.pvo-cal__chip {
+  display: block;
+  overflow: hidden;
+  padding: 1px $spacing-xxxs;
+  background: $c-chip;
+  border-radius: $radius-xxs;
+  color: $c-on-chip;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pvo-cal__more {
+  color: $c-muted;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.pvo-cal__dots {
+  display: none;
+  gap: 3px;
+  margin-top: 4px;
+
+  i {
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: $c-link;
+    border-radius: 50%;
+  }
+
+  @include pvo-mobile {
+    display: flex;
+  }
+}
+
+// ---- agenda ---------------------------------------------------------------------
+
+.pvo-agenda__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-xxs $spacing-sm;
+  margin-bottom: $spacing-xs;
+  padding-bottom: $spacing-sm;
+  border-bottom: 1px solid $c-rule;
+}
+
+.pvo-agenda__title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.pvo-agenda__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  > li + li {
+    border-top: 1px solid $c-rule;
+  }
+}
+
+.pvo-agenda__status {
+  padding: $spacing-xs 0;
+  color: $c-text;
+  font-size: 0.95rem;
+}
+
+// ---- event card -----------------------------------------------------------------
+
+.pvo-event {
+  @include pvo-bare-button;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+  width: 100%;
+  padding: $spacing-sm $spacing-xxxs;
+  border-radius: $radius-xs;
+  color: $c-strong;
+  text-align: left;
+
+  &:hover {
+    background: var(--panel-mid);
+
+    .pvo-event__title {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  &:focus-visible {
+    @include pvo-focus;
+  }
+}
+
+.pvo-event__date {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 54px;
+  background: $c-raised;
+  border-top: 3px solid $c-flag-red;
+  border-radius: $radius-xs;
+}
+
+.pvo-event__month {
+  color: $c-red;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pvo-event__day {
+  color: $c-strong;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.pvo-event__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pvo-event__title {
+  color: $c-strong;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.pvo-event__meta {
+  color: $c-muted;
+  font-size: 0.85rem;
+}
+
+.pvo-event__thumb {
+  flex: none;
+  width: 72px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: $radius-xs !important;
+}
+
+// ---- event dialog (OCS modal mixins) -------------------------------------------------
+
+.pvo-dialog {
+  @include modal-container(300px, 600px, 0);
+  width: calc(100% - #{$spacing-lg});
+  max-height: 90vh;
+  margin: auto;
+  overflow: auto;
+  color: $c-strong;
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.85); // same as the OCS modal-overlay
+  }
+
+  @include pvo-mobile {
+    min-width: 0;
+    padding: 0;
+  }
+}
+
+.pvo-dialog__close {
+  @include modal-close-btn;
+  top: $spacing-sm;
+  right: $spacing-sm;
+  margin-left: 0;
+
+  .pvo-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  @include pvo-mobile {
+    top: $spacing-sm;
+    right: $spacing-sm;
+  }
+}
+
+.pvo-dialog__image {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 0 !important;
+}
+
+.pvo-dialog__text {
+  padding: $spacing-lg $spacing-xl $spacing-xl;
+
+  @include pvo-mobile {
+    padding: $spacing-lg;
+  }
+}
+
+.pvo-dialog__when {
+  display: block;
+  padding-right: 48px;
+  color: $c-red;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.pvo-dialog__title {
+  margin: $spacing-xs 0 0;
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+.pvo-dialog__where {
+  display: block;
+  margin-top: $spacing-xxxs;
+  color: $c-muted;
+  font-weight: 600;
+}
+
+.pvo-dialog__desc {
+  margin: $spacing-md 0 0;
+  white-space: pre-line;
+}

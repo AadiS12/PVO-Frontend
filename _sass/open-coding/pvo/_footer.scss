@@ -1,0 +1,82 @@
+// PVO footer (columns are generated from pvo_menu in _config.yml), on the OCS --bg-0 surface.
+
+.pvo-footer {
+  padding-top: 56px;
+  background: var(--bg-0);
+  border-top: 1px solid $c-rule;
+  font-size: 0.95rem;
+
+  p {
+    margin: 0;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+.pvo-footer__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr);
+  gap: $spacing-xl * 1.5;
+  padding-bottom: $spacing-xl * 1.5;
+
+  @include pvo-tablet {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $spacing-xl;
+  }
+}
+
+.pvo-footer__about p + p {
+  margin-top: $spacing-sm;
+}
+
+.pvo-footer__name {
+  display: block;
+  color: $c-strong;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.pvo-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pvo-footer__nav {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: $spacing-lg;
+
+  @include pvo-mobile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  li + li {
+    margin-top: $spacing-xs;
+  }
+}
+
+.pvo-footer__heading {
+  display: block;
+  margin-bottom: $spacing-sm;
+  color: $c-muted;
+  font-size: pvo-rem($text-sm);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pvo-footer__base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: $spacing-xs $spacing-lg;
+  padding-top: $spacing-md;
+  padding-bottom: $spacing-lg;
+  border-top: 1px solid $c-rule;
+  font-size: pvo-rem($text-md);
+}

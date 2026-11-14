@@ -1,0 +1,316 @@
+// Resource Hub, Employment Board, and Event Recaps (photo/video gallery).
+// OCS card surface and buttons; colours are the theme-aware OCS custom properties.
+
+// ---- Veterans Crisis Line card --------------------------------------------------------------
+
+.pvo-crisis {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md $spacing-xl;
+  margin-bottom: $spacing-xl;
+  border: 1px solid $c-rule;
+  border-left: 6px solid $c-flag-red;
+
+  p {
+    max-width: 40em;
+    margin: $spacing-xs 0 0;
+  }
+}
+
+.pvo-crisis__text {
+  flex: 1 1 380px;
+}
+
+.pvo-crisis__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+
+  @include pvo-mobile {
+    width: 100%;
+
+    .large {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+// ---- search + filters -------------------------------------------------------------------------
+
+.pvo-resource-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: $spacing-sm $spacing-lg;
+  margin-bottom: $spacing-lg;
+
+  .pvo-hint {
+    flex-basis: 100%;
+    margin: 0;
+  }
+}
+
+.pvo-resource-tools__search {
+  flex: 1 1 280px;
+  max-width: 420px;
+  margin: 0;
+}
+
+.pvo-resource-tools__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xxs;
+
+  [aria-pressed='true'] {
+    @extend .filledTinted;
+    box-shadow: inset 0 0 0 2px $c-link;
+  }
+}
+
+// ---- resource lists ---------------------------------------------------------------------------
+
+.pvo-resource-group {
+  margin-bottom: $spacing-xl;
+}
+
+.pvo-resource-group__title {
+  margin: 0 0 $spacing-sm;
+  font-size: 1.4rem;
+}
+
+.pvo-resource-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: $spacing-md;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pvo-resource {
+  @include pvo-card;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xxs;
+  border: 1px solid $c-rule;
+}
+
+.pvo-resource__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.pvo-resource__text {
+  color: $c-text;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.pvo-resource__phone {
+  margin-top: auto;
+  padding-top: $spacing-xxs;
+  font-weight: 700;
+}
+
+.pvo-resource-empty {
+  margin: 0 0 $spacing-xl;
+}
+
+.pvo-resource-cta {
+  border: 1px solid $c-rule;
+
+  p {
+    margin: $spacing-xs 0 0;
+  }
+}
+
+// ---- employment board -------------------------------------------------------------------------
+
+.pvo-jobs,
+.pvo-jobs-programs {
+  margin-bottom: $spacing-xl * 1.5;
+
+  > .pvo-section__title {
+    margin-bottom: $spacing-md;
+  }
+}
+
+.pvo-jobs__list {
+  margin-bottom: $spacing-md;
+}
+
+.pvo-job__title {
+  color: $c-strong;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.pvo-job__meta {
+  color: $c-muted;
+  font-size: pvo-rem($text-md);
+}
+
+.pvo-job__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-xs;
+  margin-top: auto;
+  padding-top: $spacing-xs;
+}
+
+.pvo-jobs__empty,
+.pvo-jobs__employers {
+  margin-bottom: $spacing-md;
+  border: 1px solid $c-rule;
+
+  p {
+    margin: 0 0 $spacing-sm;
+  }
+}
+
+.pvo-jobs__employers {
+  border-left: 4px solid $c-accent;
+}
+
+// ---- event recaps (gallery) -------------------------------------------------------------------
+
+.pvo-recaps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: $spacing-lg;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pvo-recaps__status {
+  margin: $spacing-lg 0 0;
+}
+
+.pvo-recap {
+  @include pvo-bare-button;
+  @include pvo-card(0);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid $c-rule;
+  text-align: left;
+  transition: border-color $transition-base;
+
+  &:hover {
+    background: var(--bg-1);
+    border-color: $c-link;
+
+    .pvo-recap__title {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  &:focus-visible {
+    @include pvo-focus;
+  }
+}
+
+.pvo-recap__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  background: $c-raised;
+}
+
+.pvo-recap__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0 !important;
+}
+
+.pvo-recap__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(-45deg, var(--bg-2), var(--bg-2) 8px, var(--bg-3) 8px, var(--bg-3) 16px);
+}
+
+.pvo-recap__badge {
+  position: absolute;
+  top: $spacing-xs;
+  left: $spacing-xs;
+  padding: 2px $spacing-xs;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: pvo-rem($text-sm);
+  font-weight: 700;
+}
+
+.pvo-recap__title {
+  padding: $spacing-sm $spacing-md 0;
+  color: $c-strong;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.pvo-recap__date {
+  padding: 2px $spacing-md $spacing-md;
+  color: $c-muted;
+  font-size: pvo-rem($text-md);
+}
+
+.pvo-home-recaps {
+  padding-top: 0;
+}
+
+// ---- video in the event dialog and the admin preview --------------------------------------------
+
+.pvo-media--video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000000;
+
+  iframe,
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+.pvo-picture__preview {
+  position: relative;
+
+  video {
+    width: 100%;
+    height: 100%;
+    background: #000000;
+  }
+}
+
+// ---- crisis line in the footer -------------------------------------------------------------------
+
+.pvo-footer__crisis {
+  padding-top: $spacing-md;
+  padding-bottom: $spacing-md;
+  border-top: 1px solid $c-rule;
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    color: $c-strong;
+  }
+}
+
+.pvo-recaps__admin {
+  margin-top: $spacing-md;
+}

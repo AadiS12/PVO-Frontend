@@ -1,0 +1,101 @@
+{%- comment -%}
+  Accessibility toolbar panel (opened from the "Accessibility" button in the top bar, or the
+  floating button that stays on screen) and the read-aloud player.
+  Settings are saved on the device; see assets/js/pvo/a11y.js.
+{%- endcomment -%}
+<button class="pvo-a11y-launch glowOnHover" type="button" aria-expanded="false" aria-controls="pvo-a11y" aria-label="Accessibility settings" title="Accessibility settings" data-a11y-open>
+  {% include pvo/icon.html name="access" %}
+  <span aria-hidden="true">Accessibility</span>
+</button>
+<section class="pvo-a11y" id="pvo-a11y" aria-labelledby="pvo-a11y-title" hidden data-a11y-panel>
+  <div class="pvo-a11y__head">
+    <h2 class="pvo-a11y__title" id="pvo-a11y-title">Accessibility</h2>
+    <button class="small primary pvo-a11y__close" type="button" aria-label="Close accessibility settings" data-a11y-close>
+      {% include pvo/icon.html name="close" %}
+    </button>
+  </div>
+
+  <div class="pvo-a11y__body">
+    <fieldset class="pvo-a11y__group">
+      <legend>Text size</legend>
+      <div class="pvo-a11y__options" data-a11y-choice="text">
+        <button class="small primary" type="button" data-value="" aria-pressed="true">100%</button>
+        <button class="small primary" type="button" data-value="lg" aria-pressed="false">115%</button>
+        <button class="small primary" type="button" data-value="xl" aria-pressed="false">130%</button>
+        <button class="small primary" type="button" data-value="xxl" aria-pressed="false">150%</button>
+      </div>
+    </fieldset>
+
+    <fieldset class="pvo-a11y__group">
+      <legend>Color theme</legend>
+      <div class="pvo-a11y__themes pvo-a11y__options" data-a11y-choice="theme">
+        {%- assign themes = "|dark|Dark,light|light|Light,warm|warm|Warm,navy|navy|Navy,contrast|contrast|High contrast" | split: "," %}
+        {%- for theme in themes %}
+        {%- assign parts = theme | split: "|" %}
+        <button class="small primary pvo-theme-swatch" type="button" data-value="{{ parts[0] }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+          <span class="pvo-theme-swatch__chip pvo-theme-swatch__chip--{{ parts[1] }}" aria-hidden="true"></span>{{ parts[2] }}
+        </button>
+        {%- endfor %}
+      </div>
+    </fieldset>
+
+    <fieldset class="pvo-a11y__group">
+      <legend>Read aloud</legend>
+      <span class="pvo-hint pvo-a11y__how">
+        <strong>Read this page</strong> starts at the part you are looking at and keeps going to the end.
+        To hear just one part, highlight it first (drag across it with your mouse, or press and hold on a phone), then choose <strong>Read selected text</strong>.
+      </span>
+      <div class="pvo-a11y__options">
+        <button class="small filledHighlight primary" type="button" data-read="page">Read this page</button>
+        <button class="small filledTinted primary" type="button" data-read="selection">Read selected text</button>
+      </div>
+      <div class="form-group pvo-a11y__rate">
+        <label for="pvo-a11y-rate">Reading speed</label>
+        <select id="pvo-a11y-rate" data-a11y-rate>
+          <option value="0.8">Slower</option>
+          <option value="1">Normal</option>
+          <option value="1.25">Faster</option>
+        </select>
+      </div>
+      <span class="pvo-hint" data-read-note hidden></span>
+    </fieldset>
+
+    <fieldset class="pvo-a11y__group">
+      <legend>Reading aids</legend>
+      <div class="pvo-a11y__switches">
+        <label class="switch">
+          <span class="toggle">
+            <input type="checkbox" data-a11y-toggle="underline">
+            <span class="slider"></span>
+          </span>
+          <span class="label-text">Underline all links</span>
+        </label>
+        <label class="switch">
+          <span class="toggle">
+            <input type="checkbox" data-a11y-toggle="spacing">
+            <span class="slider"></span>
+          </span>
+          <span class="label-text">Extra line spacing</span>
+        </label>
+        <label class="switch">
+          <span class="toggle">
+            <input type="checkbox" data-a11y-toggle="motion">
+            <span class="slider"></span>
+          </span>
+          <span class="label-text">Reduce motion</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="pvo-a11y__foot">
+      <span class="pvo-hint">Your choices are saved on this device.</span>
+      <button class="small secondary" type="button" data-a11y-reset>Reset all</button>
+    </div>
+  </div>
+</section>
+
+<div class="pvo-reader" role="region" aria-label="Read aloud" hidden data-reader>
+  <span class="pvo-reader__status" aria-live="polite">{% include pvo/icon.html name="speaker" %}<span data-reader-status>Reading aloud</span></span>
+  <button class="small primary" type="button" data-reader-pause>Pause</button>
+  <button class="small secondary" type="button" data-reader-stop>Stop</button>
+</div>

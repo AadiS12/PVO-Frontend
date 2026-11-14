@@ -1,0 +1,393 @@
+// PVO header: the same tinted-glass bar, rule colour, and bold light-blue links as the
+// OCS .site-header (open-coding/navbar.scss). Menu items come from pvo_menu in _config.yml.
+// Desktop: row 1 = logo + member account + call to action, row 2 = menu links.
+
+.pvo-topbar {
+  background: var(--bg-0);
+  border-bottom: 1px solid $c-rule;
+  color: $c-muted;
+  font-size: pvo-rem($text-sm);
+}
+
+.pvo-topbar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-xxxs $spacing-lg;
+  min-height: 34px;
+  padding-top: $spacing-xxxs;
+  padding-bottom: $spacing-xxxs;
+}
+
+.pvo-topbar__contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xxxs $spacing-lg;
+}
+
+@include pvo-mobile {
+  .pvo-topbar__inner > span:first-child,
+  .pvo-topbar__email {
+    display: none;
+  }
+
+  .pvo-topbar__inner {
+    justify-content: center;
+  }
+}
+
+.pvo-header {
+  @extend .tintedGlass;
+  position: relative;
+  background: $c-glass; // the tintedGlass fill, swapped by colour themes
+  z-index: $z-sticky;
+  border-bottom: 1px solid $c-rule;
+  font-weight: bold;
+}
+
+.pvo-header__top {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  min-height: 72px;
+}
+
+.pvo-brand {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-right: auto;
+  text-decoration: none !important;
+
+  &:focus-visible {
+    @include pvo-focus;
+  }
+}
+
+.pvo-brand__mark {
+  width: 54px;
+  height: auto;
+  border-radius: 0 !important;
+}
+
+.pvo-brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.pvo-brand__name {
+  color: $c-strong;
+  font-size: 1.05rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.pvo-brand__motto {
+  margin-top: 3px;
+  color: $c-red;
+  font-size: pvo-rem($text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+// ---- row 1: member account + call to action -----------------------------------------
+
+.pvo-header__account {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: $spacing-xs;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pvo-header__welcome {
+  display: inline-block;
+  max-width: 260px;
+  margin-right: $spacing-xxs;
+  overflow: hidden;
+  font-weight: 900;
+  text-decoration: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+
+  &:focus-visible {
+    @include pvo-focus;
+  }
+}
+
+// ---- row 2: menu links --------------------------------------------------------------
+
+.pvo-nav {
+  border-top: 1px solid $c-rule;
+}
+
+.pvo-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-xxxs $spacing-xs;
+  min-height: 48px;
+  margin: 0 0 0 -10px; // line the first link up with the logo
+  padding: 0;
+  list-style: none;
+}
+
+.pvo-nav__item {
+  position: relative;
+}
+
+// same look as the OCS .site-nav .page-link
+.pvo-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xxxs;
+  padding: 5px 10px;
+  font-size: 1rem;
+  font-weight: 900;
+  white-space: nowrap;
+  text-decoration: none;
+
+  &:focus-visible {
+    @include pvo-focus;
+  }
+}
+
+.pvo-nav__trigger {
+  @include pvo-bare-button;
+  padding: 5px 10px;
+  color: $c-link;
+  font-weight: 900;
+
+  &:hover,
+  &[aria-expanded='true'] {
+    color: $c-soft;
+  }
+}
+
+.pvo-nav__chevron {
+  width: 12px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: transform $transition-base;
+}
+
+.pvo-nav__trigger[aria-expanded='true'] .pvo-nav__chevron {
+  transform: rotate(180deg);
+}
+
+// drop-downs use the OCS dropdown look: tinted glass, rounded, deep shadow
+.pvo-submenu {
+  @extend .tintedGlass;
+  position: absolute;
+  top: calc(100% + #{$spacing-xxs});
+  left: 0;
+  z-index: $z-dropdown;
+  display: none;
+  width: 290px;
+  margin: 0;
+  padding: $spacing-xxs;
+  list-style: none;
+  background: $c-menu;
+  border: 1px solid $c-rule;
+  border-radius: $border-size;
+  box-shadow: 0 8px 16px 0 rgb(0, 0, 0);
+}
+
+.pvo-nav__trigger[aria-expanded='true'] + .pvo-submenu {
+  display: block;
+  animation: scaleIn 0.2s ease forwards; // OCS dropdown animation
+}
+
+.pvo-submenu__link {
+  display: block;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-size;
+  font-weight: 700;
+  text-decoration: none;
+
+  &:hover {
+    background: $c-hover;
+  }
+
+  &:focus-visible {
+    @include pvo-focus;
+  }
+}
+
+.pvo-submenu__note {
+  display: block;
+  margin-top: 2px;
+  color: $c-muted;
+  font-size: pvo-rem($text-sm);
+  font-weight: 400;
+}
+
+// ---- small screens: Menu button opens account + links ------------------------------------
+
+.pvo-menu-toggle {
+  display: none;
+  flex: none;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.pvo-menu-toggle__bars {
+  position: relative;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+  }
+
+  &::before {
+    top: -6px;
+  }
+
+  &::after {
+    top: 6px;
+  }
+}
+
+.pvo-menu-toggle[aria-expanded='true'] .pvo-menu-toggle__bars {
+  background: transparent;
+
+  &::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+}
+
+// Compact header (Menu button). Used below $pvo-header-break, and earlier when the
+// text-size setting makes the header wider (media queries cannot see that setting).
+@mixin pvo-header-compact {
+  .pvo-header__top {
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+    min-height: 64px;
+    padding-top: $spacing-xs;
+    padding-bottom: $spacing-xs;
+  }
+
+  // let the name wrap so the Menu button stays on the same row
+  .pvo-brand {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .pvo-brand__name {
+    white-space: normal;
+  }
+
+  .pvo-menu-toggle {
+    display: inline-flex;
+  }
+
+  .pvo-header__account,
+  .pvo-nav {
+    display: none;
+
+    &.is-open {
+      display: flex;
+    }
+  }
+
+  .pvo-header__account {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: $spacing-sm 0 $spacing-xxs;
+    border-top: 1px solid $c-rule;
+
+    .medium {
+      width: 100%;
+    }
+  }
+
+  .pvo-header__welcome {
+    max-width: none;
+    padding: $spacing-xxs 0;
+  }
+
+  .pvo-nav {
+    flex-direction: column;
+    padding-bottom: $spacing-sm;
+  }
+
+  .pvo-nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0;
+  }
+
+  .pvo-nav__link,
+  .pvo-nav__trigger {
+    justify-content: space-between;
+    width: 100%;
+    min-height: 44px;
+    padding: 0 $spacing-xxs;
+  }
+
+  .pvo-submenu {
+    position: static;
+    width: auto;
+    margin: 0 0 $spacing-xs $spacing-xs;
+    padding: 0 0 0 $spacing-xs;
+    background: none;
+    backdrop-filter: none;
+    border: 0;
+    border-left: 2px solid $c-rule;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .pvo-nav__trigger[aria-expanded='true'] + .pvo-submenu {
+    animation: none;
+  }
+}
+
+@media (max-width: $pvo-header-break) {
+  @include pvo-header-compact;
+}
+
+@each $size, $break in $pvo-header-break-by-text {
+  @media (max-width: $break) {
+    html[data-pvo-text='#{$size}'] {
+      @include pvo-header-compact;
+    }
+  }
+}
+
+@include pvo-mobile {
+  .pvo-brand__mark {
+    width: 44px;
+  }
+
+  .pvo-brand__name {
+    font-size: 0.95rem;
+  }
+
+  .pvo-brand__motto {
+    display: none;
+  }
+}

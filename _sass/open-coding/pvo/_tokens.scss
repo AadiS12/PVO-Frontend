@@ -1,0 +1,127 @@
+// PVO values expressed with the Open Coding Society palette and scales:
+//   colours -> _sass/user-colors.scss, _sass/root-color-map.scss
+//   spacing, radius, text, breakpoints, timing, z-index -> open-coding/mixins/_variables.scss
+//   card surface, radius, shadow, padding -> open-coding/elements/forms/containers.scss (.login-card)
+// The only colours OCS does not already define are the branch accents at the bottom.
+
+$pvo-card-radius: $login-container-border-radius;   // 15px, same as .login-card
+$pvo-card-shadow: $login-container-shadow;
+$pvo-card-padding: $login-container-padding;        // 20px
+$pvo-rule: #404040;                                  // same line colour as the OCS .site-header (navbar.scss)
+$pvo-muted: $text-muted;                             // #aaa
+
+// OCS filledHighlight blue, one OCS darken step deeper so white text passes WCAG AA (5.6:1)
+$pvo-blue: darken($blue1, 9%);
+// OCS red, lightened so small text passes WCAG AA on OCS cards
+$pvo-red: lighten($red, 10%);
+
+// ---- theme-aware colours ------------------------------------------------------------
+// Components use these instead of fixed Sass colours. They are OCS CSS custom
+// properties (defined in root-color-map.scss / user-preferences.scss, the same ones the
+// OCS ThemeEngine sets), so by default they ARE the OCS palette. The colour themes in
+// _themes.scss redefine them. --pvo-* properties fall back to the OCS-derived values above.
+$c-strong: var(--white1);            // headings and strong text
+$c-soft: var(--white2);              // hover text
+$c-text: var(--white3);              // body text
+$c-muted: var(--text-muted);
+$c-link: var(--lightBlue1);
+$c-page: var(--background);
+$c-sunken: var(--bg-0);
+$c-surface: var(--bg-1);
+$c-surface-2: var(--bg-2);
+$c-raised: var(--bg-3);
+$c-border: var(--ui-border);
+$c-band: var(--gradient1);
+$c-flag-red: var(--red);
+$c-rule: var(--pvo-rule, #{$pvo-rule});
+$c-red: var(--pvo-red, #{$pvo-red});
+$c-accent: var(--pvo-accent, #{$pvo-blue});
+$c-on-accent: var(--pvo-on-accent, #{$white1});
+$c-tint: var(--pvo-tint, #{rgba($blue1, 0.15)});
+$c-tint-soft: var(--pvo-tint-soft, #{rgba($blue1, 0.12)});
+$c-chip: var(--pvo-chip, #{rgba($blue1, 0.45)});
+$c-on-chip: var(--pvo-on-chip, #{$white1});
+$c-hover: var(--pvo-hover, #{rgba($white1, 0.08)});
+$c-ring: var(--pvo-ring, #{rgba($white1, 0.85)});
+$c-glass: var(--pvo-glass, rgba(50, 50, 50, 0.5));    // OCS .tintedGlass fill
+$c-menu: var(--pvo-menu, rgba(40, 40, 40, 0.92));
+$c-warn-text: var(--pvo-warn-text, #{$warn});
+$c-focus: var(--pvo-focus, #{$lightBlue1});
+
+// OCS sizes are in px; PVO converts them to rem so the text-size setting scales them
+@function pvo-rem($px) {
+  @return ($px / 16px) * 1rem;
+}
+
+$pvo-max-width: 1180px;
+// Below this the header switches to the Menu button. Measured: the widest header row
+// (signed-in admin: logo + Welcome + Admin + Log out + Request assistance) needs ~1030px.
+$pvo-header-break: 1060px;
+// The same, for each larger text size (header width grows with the text; re-measure if menu items change)
+$pvo-header-break-by-text: (
+  "lg": 1220px,
+  "xl": 1380px,
+  "xxl": 1600px
+);
+
+// Branch accents (keys match _data/pvo_branches.yml; quoted because "navy" is a CSS colour name)
+$pvo-branch-colors: (
+  "army": #3b4a35,
+  "marine-corps": #a3192d,
+  "navy": #13336b,
+  "air-force": #1d4f9c,
+  "space-force": #3a4559,
+  "coast-guard": #c4492b,
+  "national-guard": #5d6b3d
+);
+
+// The OCS card surface (.login-card / .signup-card)
+@mixin pvo-card($padding: $pvo-card-padding) {
+  padding: $padding;
+  background-color: var(--bg-1);
+  border-radius: $pvo-card-radius;
+  box-shadow: $pvo-card-shadow;
+  color: $c-strong;
+}
+
+@mixin pvo-mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin pvo-tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+// Keyboard focus ring in the OCS link colour (OCS buttons have none)
+@mixin pvo-focus {
+  outline: 2px solid $c-focus;
+  outline-offset: 2px;
+}
+
+// Small uppercase label used above headings (OCS has no eyebrow style)
+@mixin pvo-kicker {
+  display: inline-block;
+  color: $c-red;
+  font-size: pvo-rem($text-sm);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+// OCS gives every <button> a grey fill and hover; for buttons that should look like links
+@mixin pvo-bare-button {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+
+  &:hover,
+  &:active {
+    background: transparent;
+  }
+}

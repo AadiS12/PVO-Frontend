@@ -1,0 +1,337 @@
+// Accessibility toolbar for PVO pages: text size, colour theme (_themes.scss),
+// read aloud, and reading aids. Settings live as data-pvo-* attributes on <html>,
+// set by assets/js/pvo/a11y-boot.js before the page paints.
+
+// ---- text size --------------------------------------------------------------------------
+// OCS sets html { font-size: 16px }. PVO text is in rem (see pvo-rem in _tokens.scss and the
+// OCS button/input sizes in _base.scss), so changing the root size scales the page text.
+html[data-pvo-text='lg'] {
+  font-size: 18.4px; // 115%
+}
+
+html[data-pvo-text='xl'] {
+  font-size: 20.8px; // 130%
+}
+
+html[data-pvo-text='xxl'] {
+  font-size: 24px; // 150%
+}
+
+// ---- reading aids -------------------------------------------------------------------------
+
+html[data-pvo-underline] body.pvo {
+  a:not(.small):not(.medium):not(.large):not(.pvo-hub__item):not(.pvo-branch__link):not(.pvo-brand) {
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+  }
+
+  .pvo-hub__go {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+html[data-pvo-spacing] body.pvo .pvo-main {
+  p, li, dt, dd, label, legend, span, a, h1, h2, h3 {
+    line-height: 1.8 !important;
+    letter-spacing: 0.03em;
+    word-spacing: 0.12em;
+  }
+
+  p + p {
+    margin-top: 1.1em;
+  }
+}
+
+html[data-pvo-motion] body.pvo {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ---- toolbar button (top bar) ------------------------------------------------------------
+
+.pvo-topbar__a11y {
+  .pvo-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// ---- panel: OCS widget-container + header-bar -----------------------------------------------
+
+.pvo-a11y {
+  @include widget-container(380px);
+  position: fixed;
+  top: 44px;
+  right: $spacing-md;
+  z-index: $z-modal;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 60px);
+
+  @include pvo-mobile {
+    top: 40px;
+    right: $spacing-xxs;
+    left: $spacing-xxs;
+    width: auto;
+    max-width: none;
+  }
+}
+
+.pvo-a11y__head {
+  @include header-bar(14px, 18px);
+}
+
+.pvo-a11y__title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.pvo-a11y__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  padding: 0;
+
+  .pvo-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.pvo-a11y__body {
+  padding: $spacing-sm $spacing-md $spacing-md;
+  overflow-y: auto;
+}
+
+.pvo-a11y__group {
+  margin: 0;
+  padding: $spacing-sm 0;
+  border: 0;
+  border-bottom: 1px solid $c-rule;
+
+  legend {
+    float: left; // keeps the legend inside the fieldset padding
+    width: 100%;
+    margin-bottom: $spacing-xs;
+    padding: 0;
+    color: $c-strong;
+    font-size: pvo-rem($text-md);
+    font-weight: 700;
+  }
+
+  > :not(legend) {
+    clear: both;
+  }
+}
+
+.pvo-a11y__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xxs;
+}
+
+// pressed option buttons take the OCS filledTinted style
+.pvo-a11y__options [aria-pressed='true'],
+.pvo-theme-swatch[aria-pressed='true'] {
+  @extend .filledTinted;
+  box-shadow: inset 0 0 0 2px $c-link;
+}
+
+.pvo-a11y__themes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: $spacing-xxs;
+}
+
+.pvo-theme-swatch {
+  display: flex !important;
+  align-items: center;
+  gap: $spacing-xxs;
+  justify-content: flex-start !important;
+  text-align: left;
+}
+
+.pvo-theme-swatch__chip {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+
+  // previews of each theme (fixed colours: they show the theme, not the current one)
+  &--dark {
+    background: linear-gradient(135deg, $background 50%, $bg-3 50%);
+  }
+
+  &--light {
+    background: linear-gradient(135deg, #ffffff 50%, #0064d1 50%);
+  }
+
+  &--warm {
+    background: linear-gradient(135deg, #f4ecd8 50%, #8a4510 50%);
+  }
+
+  &--navy {
+    background: linear-gradient(135deg, #0b1a33 50%, #c0262f 50%);
+  }
+
+  &--contrast {
+    background: linear-gradient(135deg, #000000 50%, #ffe14d 50%);
+  }
+}
+
+.pvo-a11y__rate {
+  margin: $spacing-xs 0 0;
+}
+
+.pvo-a11y__switches {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xxxs;
+
+  .switch {
+    cursor: pointer;
+  }
+
+  input:focus-visible + .slider {
+    @include pvo-focus;
+  }
+}
+
+.pvo-a11y__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-xs;
+  padding-top: $spacing-sm;
+
+  .pvo-hint {
+    margin: 0;
+  }
+}
+
+// ---- read-aloud player + the paragraph being read ---------------------------------------------
+
+// bottom centre, between the floating Accessibility (left) and assistant (right) buttons
+.pvo-reader {
+  @include widget-container(auto);
+  position: fixed;
+  bottom: $spacing-lg;
+  left: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  max-width: calc(100vw - 180px);
+  padding: $spacing-xs $spacing-sm;
+  border-radius: 999px;
+  transform: translateX(-50%);
+
+  @include pvo-mobile {
+    bottom: 76px; // above the floating buttons
+    max-width: calc(100vw - 16px);
+    border-radius: $radius-lg;
+  }
+}
+
+// ---- floating Accessibility button (always on screen; the top-bar button scrolls away) ----
+
+.pvo-a11y-launch {
+  position: fixed;
+  left: $spacing-lg;
+  bottom: $spacing-lg;
+  z-index: $z-fixed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 50% !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  color: $white1;
+  font-weight: 700;
+
+  &::after {
+    border: 1px solid $c-rule;
+  }
+
+  .pvo-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  span {
+    display: none;
+  }
+
+  &:focus-visible {
+    @include pvo-focus;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  // wide screens have room for the label
+  @media (min-width: 1500px) {
+    width: auto;
+    padding: 0 $spacing-lg 0 $spacing-md;
+    border-radius: 999px !important;
+
+    span {
+      display: inline;
+    }
+  }
+
+  @include pvo-mobile {
+    left: $spacing-sm;
+    bottom: $spacing-sm;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+.pvo-reader__status {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xxs;
+  padding: 0 $spacing-xxs;
+  color: $c-strong;
+  font-size: pvo-rem($text-md);
+  font-weight: 700;
+
+  .pvo-icon {
+    width: 18px;
+    height: 18px;
+    color: $c-link;
+  }
+}
+
+.pvo-reading {
+  border-radius: $radius-xs;
+  outline: 3px solid $c-focus !important;
+  outline-offset: 4px;
+  background-color: $c-tint-soft;
+  scroll-margin: 120px;
+}
+
+.pvo-a11y__how {
+  margin: 0 0 $spacing-xs;
+  line-height: 1.45;
+
+  strong {
+    color: $c-strong;
+  }
+}

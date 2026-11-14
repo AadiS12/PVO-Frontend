@@ -59,3 +59,6 @@ _notebooks/**/*_csa.md
 _notebooks/**/*_csse.md
 _notebooks/**/*_cwgu.md
 _notebooks/**/*_content.md
+
+# Ruby Sass compile cache (created by Jekyll builds)
+.sass-cache/

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+  {%- include head.html -%}
+  <body class="pvo{% if page.body_class %} {{ page.body_class }}{% endif %}">
+    {%- comment -%} Applies saved accessibility settings (theme, text size) before the page paints {%- endcomment %}
+    <script src="{{ '/assets/js/pvo/a11y-boot.js' | relative_url }}"></script>
+    {%- include pvo/header.html -%}
+    <main id="main" class="pvo-main" tabindex="-1">
+      {{ content }}
+    </main>
+    {%- include pvo/footer.html -%}
+    {%- include pvo/a11y-panel.html -%}
+    {%- if page.chatbot -%}
+      {%- include pvo/chatbot.html -%}
+    {%- endif -%}
+    <script type="module" src="{{ '/assets/js/pvo/site.js' | relative_url }}"></script>
+    {%- if page.pvo_script %}
+    <script type="module" src="{{ page.pvo_script | relative_url }}"></script>
+    {%- endif %}
+  </body>
+</html>

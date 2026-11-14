@@ -1,0 +1,79 @@
+# Resource Hub (/resources/). PVO can edit, add, or reorder anything here.
+# Each item: title, url, text, and optional phone (shown as a tap-to-call link).
+# Links were checked on 2026-11-13. PVO is not affiliated with these organizations.
+
+crisis:
+  title: Veterans Crisis Line
+  text: Free, confidential support 24 hours a day for veterans, service members, and the people who care about them. You do not need to be enrolled in VA benefits or health care.
+  actions:
+    - { label: "Call 988, then press 1", url: "tel:988" }
+    - { label: "Text 838255", url: "sms:838255" }
+    - { label: "Chat online", url: "https://www.veteranscrisisline.net/get-help-now/chat/" }
+
+categories:
+  - name: Health care
+    items:
+      - title: VA health care
+        url: https://www.va.gov/health-care/
+        text: Apply for VA health care, see what is covered, and manage appointments and prescriptions.
+      - title: Find a VA location near you
+        url: https://www.va.gov/find-locations/
+        text: Search for VA medical centers, clinics, and benefit offices near Poway and Ramona.
+      - title: Vet Centers
+        url: https://www.vetcenter.va.gov/
+        text: Free, confidential counseling for veterans, service members, and their families, close to home.
+
+  - name: Benefits & claims
+    items:
+      - title: Disability compensation
+        url: https://www.va.gov/disability/
+        text: Learn about VA disability benefits and how to file or check on a claim.
+      - title: Veterans pension
+        url: https://www.va.gov/pension/
+        text: Monthly payments for wartime veterans with limited income who are 65 or older or have a disability.
+      - title: Free help from an accredited representative
+        url: https://www.va.gov/get-help-from-accredited-representative/
+        text: Find an accredited representative or veterans service officer who can help with a claim at no cost.
+      - title: Disabled American Veterans (DAV)
+        url: https://www.dav.org/
+        text: Free benefits help and transportation to VA medical appointments. PVO supports the DAV.
+
+  - name: Housing
+    items:
+      - title: VA home loans
+        url: https://www.va.gov/housing-assistance/home-loans/
+        text: Home loan guaranty, refinancing, and adapted housing grants for veterans with disabilities.
+      - title: Homeless or at risk of losing your home
+        url: https://department.va.gov/homeless/
+        text: VA programs for housing, food, and health care.
+        phone: "877-424-3838"
+        phone_label: "National Call Center for Homeless Veterans, 24/7"
+
+  - name: Education & work
+    items:
+      - title: GI Bill and education benefits
+        url: https://www.va.gov/education/
+        text: Pay for college, trade school, apprenticeships, and on-the-job training.
+      - title: PVO Employment Board
+        url: /jobs/
+        text: Local openings from employers who want to hire veterans, plus job programs and training.
+
+  - name: Family & caregivers
+    items:
+      - title: VA Caregiver Support Program
+        url: https://www.caregiver.va.gov/
+        text: Training, support, and services for the family members and friends who care for veterans.
+      - title: Military OneSource
+        url: https://www.militaryonesource.mil/
+        text: Free counseling, financial help, and information for service members, veterans, and families.
+
+  - name: Local help
+    items:
+      - title: Request help from PVO
+        url: /prescreener
+        text: Home repairs, vehicle repairs, and other hands-on help for veterans in Poway, Ramona, and nearby.
+      - title: 2-1-1 San Diego
+        url: https://211sandiego.org/
+        text: Dial 2-1-1 any time for local food, housing, utility, and health resources in San Diego County.
+        phone: "211"
+        phone_label: "Call"

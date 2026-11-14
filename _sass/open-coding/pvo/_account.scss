@@ -1,0 +1,473 @@
+// PVO member pages. The forms are OCS: .login-container/.login-card/.signup-card,
+// .form-group fields (OCS inputs, selects, textareas), OCS .switch toggles, OCS buttons.
+// This file only lays those pieces out.
+
+.pvo-page-head {
+  padding: $spacing-xl 0 $spacing-lg;
+  background: $c-band;
+  border-bottom: 1px solid $c-rule;
+
+  p {
+    max-width: 42em;
+    margin: $spacing-xs 0 0;
+  }
+}
+
+.pvo-page-head__title {
+  margin: $spacing-xxs 0 0;
+  font-size: 2.2rem;
+  line-height: 1.2;
+
+  @include pvo-mobile {
+    font-size: 1.75rem;
+  }
+}
+
+.pvo-account {
+  padding-top: $spacing-xl;
+  padding-bottom: 64px;
+}
+
+.pvo-account__back {
+  margin: $spacing-xl 0 0;
+}
+
+.pvo-account__help {
+  margin: $spacing-sm 0 0;
+  font-size: pvo-rem($text-md);
+}
+
+.pvo-loading {
+  margin: 0;
+  padding: $spacing-lg 0;
+}
+
+.pvo-gate,
+.pvo-signed-in {
+  max-width: 680px;
+  border: 1px solid $c-rule;
+  border-top: 4px solid $c-flag-red;
+
+  p {
+    margin: $spacing-xs 0 0;
+  }
+}
+
+.pvo-fieldset {
+  min-width: 0;
+  margin: 0 0 $spacing-lg;
+  padding: 0;
+  border: 0;
+
+  legend {
+    margin-bottom: $spacing-sm;
+    padding: 0;
+    color: $c-strong;
+    font-size: pvo-rem($text-md);
+    font-weight: 600;
+  }
+}
+
+.pvo-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0 $spacing-lg;
+}
+
+.pvo-form-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-xs $spacing-md;
+
+  .pvo-status {
+    margin-top: 0;
+  }
+}
+
+// OCS .form-group selects are dark with no arrow; keep the native arrow visible
+body.pvo .form-group select {
+  width: 100%;
+}
+
+// ---- login page (OCS .login-container) ---------------------------------------------
+
+body.pvo .login-container {
+  align-items: stretch;
+
+  .login-card,
+  .signup-card {
+    border: 1px solid $c-rule;
+
+    hr {
+      margin: $spacing-md 0;
+    }
+
+    p {
+      margin: 0 0 $spacing-sm;
+    }
+  }
+
+  .login-card {
+    border-top: 4px solid $c-flag-red;
+  }
+
+  .signup-card {
+    border-top: 4px solid $c-accent;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+}
+
+// ---- profile + survey -----------------------------------------------------------
+
+.pvo-profile {
+  display: grid;
+  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+  align-items: start;
+  gap: $spacing-xl;
+
+  @include pvo-tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.pvo-profile__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid $c-rule;
+}
+
+.pvo-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: $spacing-sm;
+  background: $c-accent;
+  border: 2px solid $c-ring;
+  border-radius: 50%;
+  color: $c-on-accent;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.pvo-profile__name {
+  margin: 0;
+  font-size: 1.35rem;
+  overflow-wrap: anywhere;
+}
+
+.pvo-profile__uid {
+  margin: 2px 0 $spacing-sm;
+  color: $c-muted;
+  font-size: pvo-rem($text-md);
+  overflow-wrap: anywhere;
+}
+
+.pvo-profile__facts {
+  width: 100%;
+  margin: $spacing-md 0 0;
+  border-top: 1px solid $c-rule;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    gap: $spacing-sm;
+    padding: $spacing-xxs 0;
+    border-bottom: 1px solid $c-rule;
+    font-size: pvo-rem($text-md);
+  }
+
+  dt {
+    color: $c-muted;
+  }
+
+  dd {
+    margin: 0;
+    color: $c-strong;
+    font-weight: 600;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+}
+
+.pvo-profile__card .pvo-notice {
+  margin-top: $spacing-md;
+}
+
+.pvo-profile__links {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  width: 100%;
+  margin-top: $spacing-lg;
+
+  .medium {
+    width: 100%;
+  }
+}
+
+.pvo-profile__surveys {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  min-width: 0;
+}
+
+.pvo-survey {
+  border: 1px solid $c-rule;
+  border-top: 4px solid $c-flag-red;
+  scroll-margin-top: $spacing-lg;
+
+  > p {
+    margin: 0 0 $spacing-lg;
+  }
+
+  // the volunteer survey sits underneath, in the accent colour
+  &--volunteer {
+    border-top-color: $c-accent;
+  }
+}
+
+.pvo-fieldset__hint {
+  margin: 0 0 $spacing-sm;
+}
+
+.pvo-consent {
+  padding: $spacing-sm $spacing-md;
+  background: $c-tint;
+  border-radius: $radius-lg;
+
+  .pvo-hint {
+    margin-top: $spacing-xs;
+  }
+}
+
+.pvo-profile__jump {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xxs;
+  width: 100%;
+  margin-top: $spacing-md;
+  padding-top: $spacing-sm;
+  border-top: 1px solid $c-rule;
+  font-weight: 700;
+}
+
+.pvo-survey__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $spacing-xxxs $spacing-md;
+  margin-bottom: $spacing-xs;
+}
+
+.pvo-survey__saved {
+  color: $c-muted;
+  font-size: pvo-rem($text-sm);
+}
+
+// OCS .switch toggles laid out in a grid
+.pvo-switches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: $spacing-xs $spacing-lg;
+
+  .switch {
+    padding: $spacing-xxs 0;
+    cursor: pointer;
+  }
+
+  .label-text {
+    font-size: 0.95rem;
+  }
+
+  // the OCS toggle hides its checkbox, so show keyboard focus on the slider
+  input:focus-visible + .slider {
+    @include pvo-focus;
+  }
+}
+
+// ---- admin ------------------------------------------------------------------------
+
+.pvo-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-lg;
+}
+
+// the selected tab takes the OCS filledTinted style
+.pvo-tab[aria-selected='true'] {
+  @extend .filledTinted;
+}
+
+.pvo-admin__events {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  align-items: start;
+  gap: $spacing-xl;
+
+  @include pvo-tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.pvo-admin__events > .pvo-card,
+#panel-people > .pvo-card {
+  border: 1px solid $c-rule;
+}
+
+.pvo-admin__editor {
+  border-top: 4px solid $c-flag-red !important;
+}
+
+.pvo-admin__events-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pvo-admin__event {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: $spacing-xxxs $spacing-sm;
+  padding: $spacing-sm 0;
+  border-bottom: 1px solid $c-rule;
+
+  // dim only the picture; dimming text would fail contrast
+  &.is-past .pvo-admin__thumb {
+    opacity: 0.5;
+  }
+}
+
+.pvo-admin__thumb {
+  grid-row: span 2;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: $radius-xs !important;
+
+  &--empty {
+    display: block;
+    background: repeating-linear-gradient(-45deg, $c-surface-2, $c-surface-2 6px, $c-raised 6px, $c-raised 12px);
+  }
+}
+
+.pvo-admin__event-title {
+  display: block;
+  color: $c-strong;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.pvo-admin__event-meta {
+  display: block;
+  color: $c-muted;
+  font-size: pvo-rem($text-md);
+}
+
+.pvo-admin__event-actions {
+  display: flex;
+  gap: $spacing-xs;
+}
+
+.pvo-picture {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: $spacing-lg;
+
+  @include pvo-mobile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.pvo-picture__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bg-0);
+  border: 1px dashed $c-border;
+  border-radius: $radius-lg;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0 !important;
+  }
+}
+
+.pvo-picture__empty {
+  color: $c-muted;
+  font-size: pvo-rem($text-md);
+}
+
+.pvo-picture__inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $spacing-xs;
+
+  .form-group {
+    width: 100%;
+    margin-bottom: 0;
+  }
+}
+
+// the file input is visually hidden, so show its keyboard focus on the label button
+// (a class, not `input`, because OCS `@extend input` would copy an input selector onto textareas)
+.pvo-picture__inputs:has(.pvo-picture__file:focus-visible) .pvo-picture__upload {
+  @include pvo-focus;
+}
+
+// People & Roles: what each role can do
+.pvo-role-guide {
+  display: grid;
+  gap: $spacing-xs;
+  margin: $spacing-sm 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  .pvo-badge {
+    margin-right: $spacing-xxxs;
+  }
+}
+
+.pvo-table-wrap {
+  margin-top: $spacing-md;
+  overflow-x: auto;
+}
+
+.pvo-table {
+  width: 100%;
+
+  // minima's dark-skin header grey (#959595) is just under WCAG AA on its fill
+  th {
+    color: $c-text;
+  }
+
+  td {
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+  }
+}
+
+// role picker: the OCS select-control mixin
+.pvo-role-select {
+  @include select-control(150px);
+  min-height: 36px;
+}

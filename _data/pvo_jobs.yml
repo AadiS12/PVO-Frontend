@@ -1,0 +1,33 @@
+# Employment Board (/jobs/).
+#
+# listings: local openings PVO has been asked to share. Add one block per opening:
+#   - title: Maintenance Technician
+#     employer: Example Company
+#     location: Poway, CA
+#     type: Full time            # Full time, Part time, Seasonal, Volunteer...
+#     posted: 2026-11-10         # YYYY-MM-DD; shown as "Posted Nov 10, 2026"
+#     url: https://...           # where to apply
+#     text: One or two sentences about the job.
+# Only post real openings, with the employer's permission. The page shows a note when the list is empty.
+listings: []
+
+# programs: help finding work, building skills, or getting hired. Links checked on 2026-11-13.
+programs:
+  - title: Veteran Readiness and Employment (VR&E)
+    url: https://www.va.gov/careers-employment/vocational-rehabilitation/
+    text: VA help to explore careers, get training, and find and keep a job, especially for veterans with a service-connected disability.
+  - title: Federal jobs for veterans (USAJOBS)
+    url: https://www.usajobs.gov/help/working-in-government/unique-hiring-paths/veterans/
+    text: How veterans' preference and special hiring authorities work for federal jobs.
+  - title: CalJOBS
+    url: https://www.caljobs.ca.gov/
+    text: California's job board. Veterans get priority service at America's Job Centers of California.
+  - title: Hiring Our Heroes
+    url: https://www.hiringourheroes.org/
+    text: Hiring events, fellowships, and career programs for veterans, service members, and military spouses.
+  - title: DOL Veterans' Employment and Training Service
+    url: https://www.dol.gov/agencies/vets
+    text: U.S. Department of Labor programs and job protections for veterans.
+  - title: DoD SkillBridge
+    url: https://www.skillbridge.mil/
+    text: For service members in their last 180 days of service. Civilian training, apprenticeships, and internships.

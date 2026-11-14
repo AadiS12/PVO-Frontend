@@ -1,0 +1,87 @@
+<a class="pvo-skip" href="#main">Skip to main content</a>
+
+<div class="pvo-topbar">
+  <div class="pvo-wrap pvo-topbar__inner">
+    <span>Serving veterans and their families in Poway, Ramona &amp; nearby since 2014</span>
+    <span class="pvo-topbar__contact">
+      <a href="{{ site.pvo_contact.phone_link }}">{{ site.pvo_contact.phone }}</a>
+      <a class="pvo-topbar__email" href="mailto:{{ site.pvo_contact.email }}">{{ site.pvo_contact.email }}</a>
+      <button class="small filledTinted primary pvo-topbar__a11y" type="button" aria-expanded="false" aria-controls="pvo-a11y" data-a11y-open>
+        {% include pvo/icon.html name="access" %}
+        Accessibility
+      </button>
+    </span>
+  </div>
+</div>
+
+<header class="pvo-header">
+  <div class="pvo-wrap pvo-header__top">
+    <a class="pvo-brand" href="{{ '/' | relative_url }}">
+      <img class="pvo-brand__mark" src="{{ '/images/pvo/flag-mark.png' | relative_url }}" alt="" width="54" height="43">
+      <span class="pvo-brand__text">
+        <span class="pvo-brand__name">Poway Veterans Organization</span>
+        <span class="pvo-brand__motto">Commitment &middot; Service &middot; Community</span>
+      </span>
+    </a>
+
+    <button class="medium primary pvo-menu-toggle" type="button" aria-expanded="false" aria-controls="pvo-account pvo-nav" data-pvo-menu-toggle>
+      <span class="pvo-menu-toggle__bars" aria-hidden="true"></span>
+      Menu
+    </button>
+
+    <ul class="pvo-header__account" id="pvo-account" aria-label="Member account" data-pvo-menu-panel>
+      {%- for item in site.pvo_menu.account %}
+      {%- if item.show == 'signed-out' %}
+      <li data-show="signed-out">
+        <a class="medium filledTinted primary" {% include pvo/link-attrs.html url=item.url %}>{{ item.title }}</a>
+      </li>
+      {%- elsif item.greet %}
+      <li data-show="{{ item.show }}" hidden>
+        <a class="pvo-header__welcome" title="{{ item.title }}" {% include pvo/link-attrs.html url=item.url %}>Welcome, <span data-pvo-name>member</span></a>
+      </li>
+      {%- else %}
+      <li data-show="{{ item.show }}" hidden>
+        <a class="medium primary" {% include pvo/link-attrs.html url=item.url %}>{{ item.title }}</a>
+      </li>
+      {%- endif %}
+      {%- endfor %}
+      <li data-show="signed-in" hidden>
+        <button class="medium secondary" type="button" data-pvo-signout>Log out</button>
+      </li>
+      {%- if site.pvo_menu.cta %}
+      <li>
+        <a class="medium filledHighlight primary" {% include pvo/link-attrs.html url=site.pvo_menu.cta.url %}>{{ site.pvo_menu.cta.title }}</a>
+      </li>
+      {%- endif %}
+    </ul>
+  </div>
+
+  <nav class="pvo-nav" id="pvo-nav" aria-label="Main" data-pvo-menu-panel>
+    <div class="pvo-wrap">
+      <ul class="pvo-nav__list">
+        {%- for item in site.pvo_menu.main %}
+        <li class="pvo-nav__item{% if item.children %} pvo-nav__item--menu{% endif %}">
+          {%- if item.children %}
+          <button class="pvo-nav__link pvo-nav__trigger" type="button" aria-expanded="false" aria-controls="pvo-submenu-{{ forloop.index }}" data-pvo-submenu>
+            {{ item.title }}
+            <svg class="pvo-nav__chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>
+          </button>
+          <ul class="pvo-submenu" id="pvo-submenu-{{ forloop.index }}">
+            {%- for child in item.children %}
+            <li>
+              <a class="pvo-submenu__link" {% include pvo/link-attrs.html url=child.url %}>
+                {{ child.title }}
+                {%- if child.note %}<span class="pvo-submenu__note">{{ child.note }}</span>{% endif %}
+              </a>
+            </li>
+            {%- endfor %}
+          </ul>
+          {%- else %}
+          <a class="pvo-nav__link" {% include pvo/link-attrs.html url=item.url %}>{{ item.title }}</a>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </nav>
+</header>

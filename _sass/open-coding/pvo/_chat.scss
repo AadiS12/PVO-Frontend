@@ -1,0 +1,231 @@
+// Floating PVO assistant (pages with `chatbot: true`), built from the OCS
+// widget-container and header-bar mixins, OCS buttons, and the .glowOnHover material.
+
+.pvo-chat-launch {
+  position: fixed;
+  right: $spacing-lg;
+  bottom: $spacing-lg;
+  z-index: $z-fixed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 50% !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  color: $c-strong;
+  font-weight: 700;
+
+  &::after {
+    border: 1px solid $c-rule;
+  }
+
+  .pvo-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  span {
+    display: none;
+  }
+
+  &:focus-visible {
+    @include pvo-focus;
+
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  // wide screens have room for the label
+  @media (min-width: 1500px) {
+    width: auto;
+    padding: 0 $spacing-lg 0 $spacing-md;
+    border-radius: 999px !important;
+
+    span {
+      display: inline;
+    }
+  }
+
+  @include pvo-mobile {
+    right: $spacing-sm;
+    bottom: $spacing-sm;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+.pvo-chat {
+  @include widget-container(400px);
+  position: fixed;
+  right: $spacing-lg;
+  bottom: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100vw - 32px);
+  height: 600px;
+  max-height: calc(100vh - 40px);
+
+  @include pvo-mobile {
+    top: $spacing-xxs;
+    right: $spacing-xxs;
+    bottom: $spacing-xxs;
+    left: $spacing-xxs;
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: none;
+  }
+}
+
+.pvo-chat__head {
+  @include header-bar(14px, 16px);
+  gap: $spacing-sm;
+}
+
+.pvo-chat__title {
+  display: block;
+  color: $c-strong;
+}
+
+.pvo-chat__sub {
+  display: block;
+  color: $c-muted;
+  font-size: pvo-rem($text-sm);
+  font-weight: 400;
+}
+
+.pvo-chat__close {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  padding: 0;
+
+  .pvo-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.pvo-chat__notice {
+  padding: $spacing-xs $spacing-md;
+  background: var(--bg-0);
+  border-bottom: 1px solid $c-rule;
+  color: $c-text;
+  font-size: pvo-rem($text-md);
+}
+
+.pvo-chat__log {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-md;
+  overflow-y: auto;
+  background: var(--panel);
+}
+
+.pvo-chat__msg {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 88%;
+
+  &--user {
+    align-self: flex-end;
+    align-items: flex-end;
+  }
+}
+
+.pvo-chat__bubble {
+  padding: $spacing-xs $spacing-sm;
+  background: var(--panel-mid);
+  border-radius: $radius-lg $radius-lg $radius-lg $radius-xxs;
+  color: $c-text;
+  font-size: 0.92rem;
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+  }
+
+  p + p,
+  p + ul,
+  ul + p {
+    margin-top: $spacing-xs;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .pvo-chat__msg--user & {
+    background: $c-accent;
+    border-radius: $radius-lg $radius-lg $radius-xxs $radius-lg;
+    color: $c-on-accent;
+  }
+}
+
+.pvo-chat__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xxxs;
+  margin-top: $spacing-xs;
+}
+
+.pvo-chat__typing {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px 0;
+
+  span {
+    width: 7px;
+    height: 7px;
+    background: $c-muted;
+    border-radius: 50%;
+    animation: statusIndicatorPendingPulse 1.2s ease-in-out infinite; // OCS status animation
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+.pvo-chat__form {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm;
+  background: var(--panel-mid);
+  border-top: 1px solid $c-rule;
+}
+
+.pvo-chat__input {
+  flex: 1;
+  min-width: 0;
+  padding: $spacing-sm $spacing-md;
+}
+
+.pvo-chat__send {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  padding: 0;
+
+  .pvo-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
