@@ -9,7 +9,9 @@ import subprocess
 from hashlib import sha256
 import concurrent.futures, traceback, re
 
-if __name__ == "__main__":
+# Run as a script, this file is "__main__". On Python 3.14+ the worker processes start
+# with "forkserver" and re-run it as "__mp_main__", with only scripts/ on the import path.
+if __name__ in ("__main__", "__mp_main__"):
     from progress_bar import ProgressBar
 else:
     from scripts.progress_bar import ProgressBar
