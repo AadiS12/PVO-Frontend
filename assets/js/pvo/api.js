@@ -3,27 +3,38 @@ import { baseurl, pythonURI, fetchOptions } from '../api/config.js';
 
 export { baseurl, pythonURI };
 
+// How long to wait for the backend before giving up. A server that accepts the
+// connection but never answers would otherwise leave pages on "Loading…" forever.
+const REQUEST_TIMEOUT_MS = 15000;
+
 /**
  * Call the Flask backend. Resolves to { ok, status, data } and never throws for
- * HTTP errors. Network failures resolve with status 0 so callers can show an
- * "unavailable" message instead of crashing.
+ * HTTP errors. Network failures and timeouts resolve with status 0 so callers can
+ * show an "unavailable" message instead of crashing or waiting forever.
+ * Pass a longer timeout (ms) for slow requests such as photo uploads.
  */
-export async function apiFetch(path, { method = 'GET', body } = {}) {
+export async function apiFetch(path, { method = 'GET', body, timeout = REQUEST_TIMEOUT_MS } = {}) {
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), timeout);
   const options = {
     ...fetchOptions,
     method,
     cache: 'no-store',
     headers: { ...fetchOptions.headers, Accept: 'application/json' },
+    signal: controller.signal,
   };
   if (body !== undefined) options.body = JSON.stringify(body);
 
   let response;
+  let text;
   try {
     response = await fetch(`${pythonURI}${path}`, options);
+    text = await response.text(); // the body can stall too, so it is inside the time limit
   } catch (error) {
-    return { ok: false, status: 0, data: null, error };
+    return { ok: false, status: 0, data: null, error, timedOut: controller.signal.aborted };
+  } finally {
+    window.clearTimeout(timer);
   }
-  const text = await response.text();
   let data = null;
   if (text) {
     try {

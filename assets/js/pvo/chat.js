@@ -94,7 +94,7 @@ export function initChat() {
     history.push({ role: 'user', content: question });
     const typing = addMessage('bot', '<span class="pvo-chat__typing" aria-label="Assistant is typing"><span></span><span></span><span></span></span>');
 
-    const result = await apiFetch('/api/chat', { method: 'POST', body: { messages: history } });
+    const result = await apiFetch('/api/chat', { method: 'POST', body: { messages: history }, timeout: 45000 });
     typing.remove();
     const reply = result.ok ? result.data?.content?.[0]?.text : null;
     if (reply) {

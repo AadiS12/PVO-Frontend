@@ -257,7 +257,7 @@ function initEventForm() {
     try {
       let picture = values.link || state.keepImage || '';
       if (state.pendingImage) {
-        const upload = await apiFetch('/api/events/image', { method: 'POST', body: { image: state.pendingImage } });
+        const upload = await apiFetch('/api/events/image', { method: 'POST', body: { image: state.pendingImage }, timeout: 90000 });
         if (!upload.ok) throw new Error(messageFrom(upload, 'The picture could not be uploaded.'));
         picture = upload.data.image_url;
       }
