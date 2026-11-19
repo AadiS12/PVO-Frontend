@@ -19,8 +19,11 @@ title: PVO
 owner_name: Open Coding Society 
 github_username: open-coding-society 
 github_repo: "pages" 
-url: "https://pvo.opencodingsociety.com"
-baseurl: "/PVO-Frontend"
+# The site is served at the root of its custom domain (GitHub repo Settings > Pages >
+# Custom domain), so baseurl is empty. If the custom domain is ever removed and the site
+# goes back to aadis12.github.io/PVO-Frontend/, set baseurl back to "/PVO-Frontend".
+url: "https://pvoteam.opencodingsociety.com"
+baseurl: ""
 future: true
 
 # Exclude from Jekyll watch - these are processed by our conversion scripts
