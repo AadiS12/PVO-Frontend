@@ -719,7 +719,7 @@ api_base: http://localhost:4500
     try {
       const apiBase = ['localhost', '127.0.0.1'].includes(location.hostname)
         ? 'http://localhost:8426'
-        : 'https://pirates.opencodingsociety.com';
+        : 'https://pvoteam-api.opencodingsociety.com';
       const res = await fetch(`${apiBase}/api/volunteers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

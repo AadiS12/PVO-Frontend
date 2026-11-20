@@ -9,7 +9,7 @@ export const pythonURI =
   (location.hostname === "localhost" ||
    location.hostname === "127.0.0.1")
     ? "http://localhost:8426"
-    : "https://pirates.opencodingsociety.com";
+    : "https://pvoteam-api.opencodingsociety.com";
 
 export const fetchOptions = {
     method: 'GET',

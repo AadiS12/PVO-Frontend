@@ -384,7 +384,7 @@ nav a:hover{color:#fff;background:rgba(255,255,255,0.08);border-color:rgba(255,2
 <script>
 const VETERAN_API_BASE = ['localhost', '127.0.0.1'].includes(location.hostname)
   ? 'http://localhost:8426'
-  : 'https://flask.opencodingsociety.com';
+  : 'https://pvoteam-api.opencodingsociety.com';
 
 // ── Zip code data ─────────────────────────────────────────────────────────────
 const SERVED_ZIPS = {

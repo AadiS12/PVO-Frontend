@@ -77,7 +77,7 @@ The eligibility flow is served by Jekyll and calls the Flask `/api/veteran/predi
 4. Open `http://127.0.0.1:4000/prescreener`. Complete the questions and confirm the result says it was saved as a live submission.
 5. Check `http://localhost:8426/api/veteran/submissions?limit=1` to verify the saved response.
 
-When deployed, the prescreener calls `https://flask.opencodingsociety.com`. If the live service is unavailable, the page labels the browser-only estimate and asks users to confirm with PVO.
+When deployed, the prescreener calls the PVO backend at `https://pvoteam-api.opencodingsociety.com`. If the live service is unavailable, the page labels the browser-only estimate and asks users to confirm with PVO.
 
 ### Capstone Requirements
 
